@@ -37,7 +37,7 @@ public class RobotContainer {
   private static final LimelightConfig limelight = new LimelightConfig();
 
   public final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
-  public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL);
+  public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL_ID);
   
   private static final ElevatorSubsytem elevatorSubsytem = ElevatorSubsytem.getInstance();
   private static final IntakeSubsystem intakeSubsystem = IntakeSubsystem.getInstance();

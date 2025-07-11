@@ -41,6 +41,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
  * Classe de subsistema onde fazemos a ponte do nosso código para YAGSL
  */
 public class SwerveSubsystem extends SubsystemBase {
+
     // Objeto global da SwerveDrive (Classe YAGSL)
     public SwerveDrive swerveDrive;
     boolean orientation = true;

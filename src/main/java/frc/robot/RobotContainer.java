@@ -33,8 +33,8 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 public class RobotContainer {
 
-  private static final  SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-  private static final  LimelightConfig limelight = new LimelightConfig();
+  private static final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
+  private static final LimelightConfig limelight = new LimelightConfig();
 
   public final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
   public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL);

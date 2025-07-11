@@ -26,7 +26,9 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
 
@@ -36,7 +38,7 @@ public class RobotContainer {
   public final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
   public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL);
   
-  private ElevatorSubsytem elevator = new ElevatorSubsytem();
+  private ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
   private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   
   private Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
@@ -52,48 +54,81 @@ public class RobotContainer {
   private void configureBindings() {
     
     //posições do elevador CORAL
-    NamedCommands.registerCommand("L4", new ElevatorCommand(elevator, Elevator.L4_POSITION));
-    NamedCommands.registerCommand("L3", new ElevatorCommand(elevator, Elevator.L3_POSITION));
-    NamedCommands.registerCommand("L2", new ElevatorCommand(elevator, Elevator.L2_POSITION));
-    NamedCommands.registerCommand("L1", new ElevatorCommand(elevator, Elevator.L1_POSITION));
+    NamedCommands.registerCommand("L4", new ElevatorCommand(elevatorSubsytem, Elevator.L4_POSITION));
+    NamedCommands.registerCommand("L3", new ElevatorCommand(elevatorSubsytem, Elevator.L3_POSITION));
+    NamedCommands.registerCommand("L2", new ElevatorCommand(elevatorSubsytem, Elevator.L2_POSITION));
+    NamedCommands.registerCommand("L1", new ElevatorCommand(elevatorSubsytem, Elevator.L1_POSITION));
     
     //posições do elevador ALGA
-    NamedCommands.registerCommand("ALGAE L2", new ElevatorCommand(elevator, Elevator.L2_ALGAE));
-    NamedCommands.registerCommand("ALGAE L3", new ElevatorCommand(elevator, Elevator.L3_ALGAE));
+    NamedCommands.registerCommand("ALGAE L2", new ElevatorCommand(elevatorSubsytem, Elevator.L2_ALGAE));
+    NamedCommands.registerCommand("ALGAE L3", new ElevatorCommand(elevatorSubsytem, Elevator.L3_ALGAE));
 
     //posições do intake
     NamedCommands.registerCommand("ALGAE POSITION", new IntakePosition(intakeSubsystem, Intake.ALGAE_POSITION));
     NamedCommands.registerCommand("ABERTURA L1", new IntakePosition(intakeSubsystem, Intake.ABERTURA_L1));
-    NamedCommands.registerCommand("POSIÇÃO DE ABERTURA", new IntakePosition(intakeSubsystem, Intake.ABERTURA_COMUM));
+    NamedCommands.registerCommand("POSIÇÃO ABERTURA", new IntakePosition(intakeSubsystem, Intake.ABERTURA_COMUM));
     NamedCommands.registerCommand("CORAL L4", new IntakePosition(intakeSubsystem, Intake.ABERTURA_L4));
     NamedCommands.registerCommand("POSIÇÃO MINIMA L1", new IntakePosition(intakeSubsystem, Intake.MIN_INTAKE));
     NamedCommands.registerCommand("GIRAR CORAL", new IntakeSpeed(intakeSubsystem, 0.8));
     NamedCommands.registerCommand("GIRAR CORAL INVERTIDO", new IntakeSpeed(intakeSubsystem, -0.8));
     
+    //sequencia de teleop 
 
+    //L1
     new JoystickButton(intakeController, 1).onTrue(NamedCommands.getCommand("ABERTURA L1")
     .andThen(NamedCommands.getCommand("L1"))
     .andThen(NamedCommands.getCommand("POSIÇÃO MINIMA L1"))
     );
 
+    //L2
     new JoystickButton(intakeController, 2).onTrue(NamedCommands.getCommand("POSIÇÃO ABERTURA")
     .andThen(NamedCommands.getCommand("L2"))
     );
 
+    //L3
     new JoystickButton(intakeController, 3).onTrue(NamedCommands.getCommand("POSIÇÃO ABERTURA")
     .andThen(NamedCommands.getCommand("L3"))
     );
 
+    //L4
     new JoystickButton(intakeController, 4).onTrue(NamedCommands.getCommand("POSIÇÃO ABERTURA")
     .andThen(NamedCommands.getCommand("L4"))
     .andThen(NamedCommands.getCommand("CORAL L4"))
     );
     
+    //empurrar e puxar o coral
     new JoystickButton(intakeController, 5).whileTrue(NamedCommands.getCommand("GIRAR CORAL"));
     new JoystickButton(intakeController, 6).whileTrue(NamedCommands.getCommand("GIRAR CORAL INVERTIDO"));
 
-  }
+    //sequencia de autonomous
 
+    //L1
+    NamedCommands.registerCommand("L1 FULL COMMAND", 
+      NamedCommands.getCommand("ABERTURA L1")
+      .andThen(NamedCommands.getCommand("L1"))
+      .andThen(NamedCommands.getCommand("POSIÇÃO MINIMA L1"))
+      );
+    //L2
+
+    NamedCommands.registerCommand("L2 FULL COMMAND", 
+    NamedCommands.getCommand("POSIÇÃO ABERTURA")
+    .andThen(NamedCommands.getCommand("L2"))
+    );  
+
+    //L3
+    NamedCommands.registerCommand("L3 FULL COMMAND", 
+    NamedCommands.getCommand("POSIÇÃO ABERTURA")
+    .andThen(NamedCommands.getCommand("L3"))
+    );
+
+    //L4  
+    NamedCommands.registerCommand("L4 FULL COMMAND", 
+    NamedCommands.getCommand("POSIÇÃO ABERTURA")
+    .andThen(NamedCommands.getCommand("L4"))
+    .andThen(NamedCommands.getCommand("CORAL L4"))
+    );
+
+  }
   public Command getAutonomousCommand() {
     return new PathPlannerAuto(Autonomous.AUTO);
   }

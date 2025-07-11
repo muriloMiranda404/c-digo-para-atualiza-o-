@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants.Elevator;
 import frc.robot.Constants.Intake;
 import frc.robot.subsystems.ElevatorSubsytem;
@@ -15,7 +14,7 @@ public class Robot extends TimedRobot {
   public static boolean trava = false;
 
   IntakeSubsystem intake = IntakeSubsystem.getInstance();
-  ElevatorSubsytem subsytem = ElevatorSubsytem.getInstance();
+  ElevatorSubsytem elevador = ElevatorSubsytem.getInstance();
   
   private final RobotContainer m_robotContainer;
   
@@ -56,8 +55,8 @@ public class Robot extends TimedRobot {
 
     intake.setPosition(Intake.ALGAE_POSITION);
 
-    subsytem.setPosition(Elevator.L1_POSITION);
-    ElevatorSubsytem.encoder.reset();
+    elevador.setPosition(Elevator.L1_POSITION);
+    elevador.resetEncoder();
   }
 
   @Override

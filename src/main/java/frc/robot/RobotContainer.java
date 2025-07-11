@@ -10,7 +10,8 @@ import frc.robot.Constants.Elevator;
 import frc.robot.Constants.IDs;
 import frc.robot.Constants.Intake;
 import frc.robot.commands.ElevatorCommand;
-import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakePosition;
+import frc.robot.commands.IntakeSpeed;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightConfig;
@@ -61,13 +62,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("ALGAE L3", new ElevatorCommand(elevator, Elevator.L3_ALGAE));
 
     //posições do intake
-    NamedCommands.registerCommand("ALGAE POSITION", new IntakeCommand(intake, Intake.ALGAE_POSITION, 0.0, 1));
-    NamedCommands.registerCommand("ABERTURA L1", new IntakeCommand(intake, Intake.POSICAO_ABERTURA_L1, 0.0, 1));
-    NamedCommands.registerCommand("POSIÇÃO DE ABERTURA", new IntakeCommand(intake, Intake.POSICAO_ABERTURA, 0.0, 1));
-    NamedCommands.registerCommand("CORAL L4", new IntakeCommand(intake, Intake.L4_POSITION, 0.0, 1));
-    NamedCommands.registerCommand("POSIÇÃO MINIMA L1", new IntakeCommand(intake, Intake.MIN_INTAKE, 0.0, 1));
-    NamedCommands.registerCommand("GIRAR CORAL", new IntakeCommand(intake, 0, 0.8, 2));
-    NamedCommands.registerCommand("GIRAR CORAL INVERTIDO", new IntakeCommand(intake, 0, -0.8, 2));
+    NamedCommands.registerCommand("ALGAE POSITION", new IntakePosition(intake, Intake.ALGAE_POSITION));
+    NamedCommands.registerCommand("ABERTURA L1", new IntakePosition(intake, Intake.ABERTURA_L1));
+    NamedCommands.registerCommand("POSIÇÃO DE ABERTURA", new IntakePosition(intake, Intake.ABERTURA_COMUM));
+    NamedCommands.registerCommand("CORAL L4", new IntakePosition(intake, Intake.ABERTURA_L4));
+    NamedCommands.registerCommand("POSIÇÃO MINIMA L1", new IntakePosition(intake, Intake.MIN_INTAKE));
+    NamedCommands.registerCommand("GIRAR CORAL", new IntakeSpeed(intake, 0.8));
+    NamedCommands.registerCommand("GIRAR CORAL INVERTIDO", new IntakeSpeed(intake, -0.8));
     
 
     new JoystickButton(intakeController, 1).onTrue(NamedCommands.getCommand("ABERTURA L1")

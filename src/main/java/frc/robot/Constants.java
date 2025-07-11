@@ -61,10 +61,10 @@ public final class Constants {
     public static final double MAX_INTAKE = 230.0;
 
     //posições
-    public static final double POSICAO_ABERTURA_L1 = 68.0;
+    public static final double ABERTURA_L1 = 68.0;
     public static final double ALGAE_POSITION = 225.0;
-    public static final double L4_POSITION = 92.0;
-    public static final double POSICAO_ABERTURA = 72.0;
+    public static final double ABERTURA_L4 = 92.0;
+    public static final double ABERTURA_COMUM = 72.0;
   }
 
   public static final class Autonomous{

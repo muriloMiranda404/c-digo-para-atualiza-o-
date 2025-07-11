@@ -9,9 +9,11 @@ import frc.robot.Constants.Controller;
 import frc.robot.Constants.Elevator;
 import frc.robot.Constants.IDs;
 import frc.robot.Constants.Intake;
+import frc.robot.commands.AlingToTarget;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakePosition;
 import frc.robot.commands.IntakeSpeed;
+import frc.robot.commands.ResetPigeon;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightConfig;
@@ -27,6 +29,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 public class RobotContainer {
 
@@ -97,6 +100,12 @@ public class RobotContainer {
     //empurrar e puxar o coral
     new JoystickButton(intakeController, 5).whileTrue(NamedCommands.getCommand("GIRAR CORAL"));
     new JoystickButton(intakeController, 6).whileTrue(NamedCommands.getCommand("GIRAR CORAL INVERTIDO"));
+
+    //limelight
+    new POVButton(controleXbox, 0).onTrue(new AlingToTarget(limelight, swerve, 0, 0));
+
+    //reset pigeon
+    new ResetPigeon(pigeon, swerve);
 
     ////////////////////////////////////// FIM DO COMANDO TELEOPERADO////////////////////////////////////////////////////
 

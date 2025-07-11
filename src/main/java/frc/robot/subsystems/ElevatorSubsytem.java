@@ -96,5 +96,7 @@ public class ElevatorSubsytem extends SubsystemBase{
         public void periodic(){
         SmartDashboard.putNumber("speed", getSpeed());
         SmartDashboard.putNumber("angulo", getDistance());
+        SmartDashboard.putBoolean("fim de curso alto", upSwitch.get());
+        SmartDashboard.putBoolean("fim de curso baixo", downSwitch.get());
  }
 }

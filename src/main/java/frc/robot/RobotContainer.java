@@ -33,16 +33,16 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 public class RobotContainer {
 
-  private SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-  private LimelightConfig limelight = new LimelightConfig();
+  private static final  SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
+  private static final  LimelightConfig limelight = new LimelightConfig();
 
   public final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
   public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL);
   
-  private ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
-  private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
+  private static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   
-  private Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
+  private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
   
   public RobotContainer() {
     swerve.setDefaultCommand(swerve.driveCommand(
@@ -142,6 +142,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return new PathPlannerAuto(Autonomous.AUTO);
   }
+
   //marcha
   public double setChoose(int choose){
     int inverter = 1;

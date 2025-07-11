@@ -3,11 +3,12 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IDs;
 
 public class LimelightConfig extends SubsystemBase{
     
     public NetworkTable Limelight(){
-        return NetworkTableInstance.getDefault().getTable("limelight");
+        return NetworkTableInstance.getDefault().getTable(IDs.LIMELIGHT);
     }
     public boolean getHasTarget(){
         return Limelight().getEntry("tv").getDouble(0)==1;

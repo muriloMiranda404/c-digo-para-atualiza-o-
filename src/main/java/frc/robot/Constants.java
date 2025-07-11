@@ -73,6 +73,7 @@ public final class Constants {
   }
   //IDS diversos
   public static final class IDs{
+    public static final String LIMELIGHT = "limelight";
     public static final int PIGEON2 = 9;
   }
 }

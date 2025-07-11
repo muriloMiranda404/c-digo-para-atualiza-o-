@@ -1,25 +1,55 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.Intake;
 
 public class IntakeSubsystem extends SubsystemBase{
     
-    public SparkMax intake = new SparkMax(Intake.INTAKE_MOTOR, SparkMax.MotorType.kBrushless);
-    public SparkMax algae = new SparkMax(Intake.ALGAE_MOTOR, SparkMax.MotorType.kBrushless);
+    public SparkMax intake;
+    public SparkMax coral;
 
     public PIDController controller;
 
     public DutyCycleEncoder encoder;
     public DigitalInput algae_swicth;
 
+    public SparkMaxConfig intakeConfig;
+    public SparkMaxConfig coralConfig;
+    public SparkMaxConfig globalCofig;
+
     public IntakeSubsystem(){
+
+        intake = new SparkMax(Intake.INTAKE_MOTOR, SparkMax.MotorType.kBrushless);
+        coral = new SparkMax(Intake.ALGAE_MOTOR, SparkMax.MotorType.kBrushless);
+
+       intakeConfig = new SparkMaxConfig();
+       coralConfig = new SparkMaxConfig();
+       globalCofig = new SparkMaxConfig();
+
+       globalCofig
+       .idleMode(IdleMode.kBrake);
+
+       intakeConfig
+       .inverted(true)
+       .apply(globalCofig);
+
+       coralConfig
+       .inverted(false)
+       .apply(globalCofig);
+
+       intake.configure(intakeConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+       coral.configure(coralConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
         controller = Intake.INTAKE_PID;
         controller.setTolerance(Intake.INTAKE_TOLERANCE);
@@ -30,7 +60,7 @@ public class IntakeSubsystem extends SubsystemBase{
         algae_swicth = new DigitalInput(Intake.ALGAE_SWICTH);
     }
     public void setSpeed(double speed){
-        algae.set(speed);
+        coral.set(speed);
     }
     public double getDistance(){
         return encoder.get() * 360;
@@ -54,16 +84,21 @@ public class IntakeSubsystem extends SubsystemBase{
         intake.set(output);
 
         if(Robot.trava == true){
-            algae.set(0.2);
+            coral.set(0.2);
         }
 
         if(!algae_swicth.get() && Robot.trava == true){
             Robot.trava = false;
-            algae.set(0);
+            coral.set(0);
         }
     }
     public void stopMotor(){
-        algae.stopMotor();
+        coral.stopMotor();
         intake.stopMotor();
+    }
+
+    public void periodic(){
+        SmartDashboard.putNumber("angulo", getDistance());
+        SmartDashboard.putBoolean("fim de curso", algae_swicth.get());
     }
 }

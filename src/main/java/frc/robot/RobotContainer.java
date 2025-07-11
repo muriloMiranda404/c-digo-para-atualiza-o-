@@ -26,9 +26,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
 
@@ -67,12 +65,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("ALGAE POSITION", new IntakePosition(intakeSubsystem, Intake.ALGAE_POSITION));
     NamedCommands.registerCommand("ABERTURA L1", new IntakePosition(intakeSubsystem, Intake.ABERTURA_L1));
     NamedCommands.registerCommand("POSIÇÃO ABERTURA", new IntakePosition(intakeSubsystem, Intake.ABERTURA_COMUM));
-    NamedCommands.registerCommand("CORAL L4", new IntakePosition(intakeSubsystem, Intake.ABERTURA_L4));
+    NamedCommands.registerCommand("CORAL L4", new IntakePosition(intakeSubsystem, Intake.CORAL_L4));
     NamedCommands.registerCommand("POSIÇÃO MINIMA L1", new IntakePosition(intakeSubsystem, Intake.MIN_INTAKE));
     NamedCommands.registerCommand("GIRAR CORAL", new IntakeSpeed(intakeSubsystem, 0.8));
     NamedCommands.registerCommand("GIRAR CORAL INVERTIDO", new IntakeSpeed(intakeSubsystem, -0.8));
     
-    //sequencia de teleop 
+  ///////////////////////////////////////////// COMANDOS TELEOPERADOS////////////////////////////////////////////////////////////
 
     //L1
     new JoystickButton(intakeController, 1).onTrue(NamedCommands.getCommand("ABERTURA L1")
@@ -100,7 +98,9 @@ public class RobotContainer {
     new JoystickButton(intakeController, 5).whileTrue(NamedCommands.getCommand("GIRAR CORAL"));
     new JoystickButton(intakeController, 6).whileTrue(NamedCommands.getCommand("GIRAR CORAL INVERTIDO"));
 
-    //sequencia de autonomous
+    ////////////////////////////////////// FIM DO COMANDO TELEOPERADO////////////////////////////////////////////////////
+
+    ////////////////////////////////////// COMANDOS AUTOMATICOS////////////////////////////////////////////////////////
 
     //L1
     NamedCommands.registerCommand("L1 FULL COMMAND", 
@@ -128,6 +128,7 @@ public class RobotContainer {
     .andThen(NamedCommands.getCommand("CORAL L4"))
     );
 
+    ///////////////////////////////////////// FIM DOS COMANDOS AUTOMATICOS ///////////////////////////////////////////////
   }
   public Command getAutonomousCommand() {
     return new PathPlannerAuto(Autonomous.AUTO);

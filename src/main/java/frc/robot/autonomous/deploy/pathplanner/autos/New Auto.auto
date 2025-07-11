@@ -13,13 +13,19 @@
         {
           "type": "named",
           "data": {
-            "name": "L4"
+            "name": "L4 FULL COMMAND"
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "coral station "
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L1 FULL COMMAND"
           }
         },
         {
@@ -32,6 +38,12 @@
           "type": "path",
           "data": {
             "pathName": "coral station 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4 FULL COMMAND"
           }
         }
       ]

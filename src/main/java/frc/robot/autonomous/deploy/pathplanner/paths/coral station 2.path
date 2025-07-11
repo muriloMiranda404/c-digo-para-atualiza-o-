@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "pontuar L4",
+      "name": "L4 FULL COMMAND",
       "waypointRelativePos": 1.0,
       "endWaypointRelativePos": null,
       "command": null

@@ -63,7 +63,7 @@ public final class Constants {
     //posições
     public static final double ABERTURA_L1 = 68.0;
     public static final double ALGAE_POSITION = 225.0;
-    public static final double ABERTURA_L4 = 92.0;
+    public static final double CORAL_L4 = 92.0;
     public static final double ABERTURA_COMUM = 72.0;
   }
 

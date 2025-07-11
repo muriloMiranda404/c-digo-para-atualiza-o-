@@ -13,7 +13,7 @@ public class Robot extends TimedRobot {
 
   public static boolean trava = false;
   IntakeSubsystem intake = new IntakeSubsystem();
-  ElevatorSubsytem subsytem = new ElevatorSubsytem();
+  ElevatorSubsytem subsytem = new ElevatorSubsytem().getIntance();
   
   private final RobotContainer m_robotContainer;
   

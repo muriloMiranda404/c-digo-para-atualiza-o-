@@ -39,7 +39,7 @@ public class RobotContainer {
   public final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
   public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL);
   
-  private static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
+  private static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem().getIntance();
   private static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   
   private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
@@ -157,14 +157,14 @@ public class RobotContainer {
       inverter = -1;
     } else {
       inverter = 1;
-    }
+    }    
     switch (choose) {
       case 1:
         return controleXbox.getLeftY() * inverter * marcha;
       case 2:
       return controleXbox.getLeftX() * inverter * marcha;
       case 3:
-      return controleXbox.getRightX() * inverter * marcha;  
+      return controleXbox.getRightX() *  marcha;  
     }
     return choose;
   }

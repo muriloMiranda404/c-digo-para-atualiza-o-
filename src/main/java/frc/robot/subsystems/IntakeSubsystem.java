@@ -28,6 +28,8 @@ public class IntakeSubsystem extends SubsystemBase{
     public SparkMaxConfig coralConfig;
     public SparkMaxConfig globalCofig;
 
+    public IntakeSubsystem subsystem;
+
     public IntakeSubsystem(){
 
         intake = new SparkMax(Intake.INTAKE_MOTOR, SparkMax.MotorType.kBrushless);
@@ -59,6 +61,14 @@ public class IntakeSubsystem extends SubsystemBase{
 
         algae_swicth = new DigitalInput(Intake.ALGAE_SWICTH);
     }
+
+    public IntakeSubsystem getInstance(){
+        if(subsystem == null){
+            return new IntakeSubsystem();
+        }
+        return subsystem;
+    }
+    
     public void setSpeed(double speed){
         coral.set(speed);
     }

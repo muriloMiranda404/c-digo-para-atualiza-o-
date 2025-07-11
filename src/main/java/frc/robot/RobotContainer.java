@@ -37,7 +37,7 @@ public class RobotContainer {
   public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL);
   
   private ElevatorSubsytem elevator = new ElevatorSubsytem();
-  private IntakeSubsystem intake = new IntakeSubsystem();
+  private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   
   private Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
   
@@ -62,13 +62,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("ALGAE L3", new ElevatorCommand(elevator, Elevator.L3_ALGAE));
 
     //posições do intake
-    NamedCommands.registerCommand("ALGAE POSITION", new IntakePosition(intake, Intake.ALGAE_POSITION));
-    NamedCommands.registerCommand("ABERTURA L1", new IntakePosition(intake, Intake.ABERTURA_L1));
-    NamedCommands.registerCommand("POSIÇÃO DE ABERTURA", new IntakePosition(intake, Intake.ABERTURA_COMUM));
-    NamedCommands.registerCommand("CORAL L4", new IntakePosition(intake, Intake.ABERTURA_L4));
-    NamedCommands.registerCommand("POSIÇÃO MINIMA L1", new IntakePosition(intake, Intake.MIN_INTAKE));
-    NamedCommands.registerCommand("GIRAR CORAL", new IntakeSpeed(intake, 0.8));
-    NamedCommands.registerCommand("GIRAR CORAL INVERTIDO", new IntakeSpeed(intake, -0.8));
+    NamedCommands.registerCommand("ALGAE POSITION", new IntakePosition(intakeSubsystem, Intake.ALGAE_POSITION));
+    NamedCommands.registerCommand("ABERTURA L1", new IntakePosition(intakeSubsystem, Intake.ABERTURA_L1));
+    NamedCommands.registerCommand("POSIÇÃO DE ABERTURA", new IntakePosition(intakeSubsystem, Intake.ABERTURA_COMUM));
+    NamedCommands.registerCommand("CORAL L4", new IntakePosition(intakeSubsystem, Intake.ABERTURA_L4));
+    NamedCommands.registerCommand("POSIÇÃO MINIMA L1", new IntakePosition(intakeSubsystem, Intake.MIN_INTAKE));
+    NamedCommands.registerCommand("GIRAR CORAL", new IntakeSpeed(intakeSubsystem, 0.8));
+    NamedCommands.registerCommand("GIRAR CORAL INVERTIDO", new IntakeSpeed(intakeSubsystem, -0.8));
     
 
     new JoystickButton(intakeController, 1).onTrue(NamedCommands.getCommand("ABERTURA L1")

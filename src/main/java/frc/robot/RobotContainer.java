@@ -39,8 +39,8 @@ public class RobotContainer {
   public final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
   public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL);
   
-  private static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem().getIntance();
-  private static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private static final ElevatorSubsytem elevatorSubsytem = ElevatorSubsytem.getInstance();
+  private static final IntakeSubsystem intakeSubsystem = IntakeSubsystem.getInstance();
   
   private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
   

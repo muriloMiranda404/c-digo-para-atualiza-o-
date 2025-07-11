@@ -13,9 +13,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsytem extends SubsystemBase{
-
-    public ElevatorSubsytem elevator = new ElevatorSubsytem();
     
+    public static ElevatorSubsytem elevator;
+    
+    public static ElevatorSubsytem getInstance(){
+        if( elevator == null){
+            return new ElevatorSubsytem();
+        }
+        return elevator;
+    }
+
     public static  SparkMaxConfig rightMotorConfig;
     public static  SparkMaxConfig leftMotorConfig;
     
@@ -30,7 +37,7 @@ public class ElevatorSubsytem extends SubsystemBase{
         public static Encoder encoder;
 
         
-        public ElevatorSubsytem(){
+        private ElevatorSubsytem(){
             
             rightMotorConfig = new SparkMaxConfig();
             leftMotorConfig = new SparkMaxConfig();
@@ -61,13 +68,7 @@ public class ElevatorSubsytem extends SubsystemBase{
             encoder.reset();
         }
         
-        public ElevatorSubsytem getIntance(){
-            if( elevator == null){
-                return new ElevatorSubsytem();
-            }
-            return elevator;
-        }
-        
+
         public void setSpeed(double speed){
             leftMotor.set(speed);
             rightMotor.set(speed);

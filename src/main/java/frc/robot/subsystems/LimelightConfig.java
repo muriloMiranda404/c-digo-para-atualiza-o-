@@ -34,7 +34,7 @@ public class LimelightConfig extends SubsystemBase{
     public double[] getPoseArena(){
         return Limelight.getEntry("botpose").getDoubleArray(new double[6]);
     }
-    public double[] tagPose(){
+    public double[] getTagPose(){
         return Limelight.getEntry("targetpose_robotspace").getDoubleArray(new double[6]);
     }
 }

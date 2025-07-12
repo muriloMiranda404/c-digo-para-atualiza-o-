@@ -46,9 +46,19 @@ public class AlingToTarget extends Command {
     private double ultimoTempoMudanca = 0.0;
     private boolean ultimoEstadoTarget = false;
 
-    private final Timer timer = new Timer();
     
-    public AlingToTarget(LimelightConfig LimelightConfig, SwerveSubsystem subsystem, double setpointX, double setpointY) {
+    private final Timer timer = new Timer();
+    private boolean automaticSetpoint;
+
+    public AlingToTarget(LimelightConfig limelightConfig, SwerveSubsystem subsystem, boolean automaticSetpoint){
+        this(limelightConfig, subsystem, 0.0, 0.0, true);
+    }
+
+    public AlingToTarget(LimelightConfig limelightConfig, SwerveSubsystem subsystem, double setpointX, double setpointY){
+        this(limelightConfig, subsystem, setpointX, setpointY, false);
+    }
+    
+    private AlingToTarget(LimelightConfig LimelightConfig, SwerveSubsystem subsystem, double setpointX, double setpointY, boolean automaticSetpoint) {
         if (LimelightConfig == null || subsystem == null) {
             throw new IllegalArgumentException("Parâmetros não podem ser nulos");
         }
@@ -58,11 +68,24 @@ public class AlingToTarget extends Command {
         this.setpointY = setpointY;
         this.xController = new PIDController(kP_X, kI_X, kD_X);
         this.rotationController = new PIDController(kP_ROTATION, kI_ROTATION, kD_ROTATION);
+        this.automaticSetpoint = automaticSetpoint;
         addRequirements(subsystem);
     }
-
+    
     @Override
     public void initialize() {
+
+        if(this.automaticSetpoint == true){
+            double[] tag = LimelightConfig.getTagPose();
+            double x = tag[2];//frente
+            double y = tag[0];//esquerda/direita
+            double yaw = tag[4];//rotação
+            
+            setpointX = x - 0.6;// 0.6 metros da tag
+            setpointY = 0.0;
+        }
+
+        
         try {
             rotationController.reset();
             xController.reset();
@@ -76,7 +99,7 @@ public class AlingToTarget extends Command {
             System.out.println("Iniciando alinhamento com a tag...");
             timer.reset();
             timer.start();
-
+            
             tentativas = 0;
             ultimoEstadoTarget = false;
             ultimaTx = 0.0;
@@ -100,58 +123,49 @@ public class AlingToTarget extends Command {
             }
             
             if (temTarget) {
-                double tx = LimelightConfig.getTx();
-                double distanciaX = LimelightConfig.getTy();
-                double ta = LimelightConfig.getTa();
-
-                if (ta >= 3.5) {
-                    ta -= 3.5;
-                } else if (ta <= 4) {
-                    ta *= 16;
-                }
+                
+                double[] tag = LimelightConfig.getTagPose();
+                double x = tag[2];//frente
+                double y = tag[4];//esquerda/direita
+                
                 
                 // Proteção contra valores inválidos
-                if (Double.isNaN(tx) || Double.isNaN(distanciaX) || Double.isNaN(ta)) {
+                if (Double.isNaN(x) || Double.isNaN(y)) {
                     System.err.println("Valores inválidos recebidos da LimelightConfig");
                     return;
                 }
                 
                 // Verifica mudanças bruscas
-                if (Math.abs(tx - ultimaTx) > 10.0) {
+                if (Math.abs(x - ultimaTx) > 10.0) {
                     ultimoTempoMudanca = timer.get();
                 }
-                ultimaTx = tx;
+                ultimaTx = x;
                 
                 // Só move se estiver estável por tempo suficiente
                 if (timer.get() - ultimoTempoMudanca > TEMPO_MINIMO_ESTAVEL) {
                     // Calcula correções
-                    double correcaoRotacao = rotationController.calculate(tx, setpointX);
-                    double correcaoX = xController.calculate(distanciaX, setpointY);
+                    double correcaoX = xController.calculate(x, setpointX);
+                    double correcaoRotation = rotationController.calculate(y, setpointY);
                     
                     // Aplica zona morta
-                    if (Math.abs(correcaoRotacao) < ZONA_MORTA) correcaoRotacao = 0;
                     if (Math.abs(correcaoX) < ZONA_MORTA) correcaoX = 0;
+                    if (Math.abs(correcaoRotation) < ZONA_MORTA) correcaoRotation = 0;
 
                     // Limita correções
-                    correcaoRotacao = Math.min(Math.max(correcaoRotacao, -MAX_CORRECAO), MAX_CORRECAO);
-                    correcaoX = Math.min(Math.max(correcaoX, -MAX_VELOCIDADE_X), MAX_VELOCIDADE_X);
+                    correcaoX = Math.min(Math.max(correcaoX, -MAX_CORRECAO), MAX_CORRECAO);
+                    correcaoRotation = Math.min(Math.max(correcaoRotation, -MAX_VELOCIDADE_X), MAX_VELOCIDADE_X);
                     
                     // Movimento mais suave em ângulos grandes
-                    if (Math.abs(tx) > ANGULO_MAXIMO) {
-                        correcaoRotacao *= 0.5;
+                    if (Math.abs(x) > ANGULO_MAXIMO) {
                         correcaoX *= 0.5;
+                        correcaoRotation *= 0.5;
                     }
 
-                    // Limita o valor do TA
-                    if (ta > 4) {
-                        ta = 4;
-                    }
-
-                    correcaoRotacao = -correcaoRotacao;
                     correcaoX = -correcaoX;
+                    correcaoRotation = -correcaoRotation;
 
-                    translation = new Translation2d(correcaoX * ta, 0);
-                    subsystem.drive(translation, correcaoRotacao, true);
+                    translation = new Translation2d(correcaoX, 0);
+                    subsystem.drive(translation, correcaoRotation, true);
                     
                     // Debug
                     SmartDashboard.putNumber("Tempo de Alinhamento", timer.get());
@@ -160,8 +174,8 @@ public class AlingToTarget extends Command {
                     LimelightConfig.setLedMode(4);
                     
                     System.out.printf("Alinhando - TX: %.2f° | Dist X: %.2f | Rot: %.2f | X: %.2f%n", 
-                        tx, distanciaX, correcaoRotacao, correcaoX);
-                    SmartDashboard.putNumber("tx", tx);      
+                        x, y, correcaoRotation, correcaoX);
+                    SmartDashboard.putNumber("tx", x);      
                     SmartDashboard.putBoolean("tag achada", LimelightConfig.getHasTarget());
                     SmartDashboard.putNumber("ty", LimelightConfig.getTy());
                     SmartDashboard.putBoolean("foi alinhada", rotationController.atSetpoint());

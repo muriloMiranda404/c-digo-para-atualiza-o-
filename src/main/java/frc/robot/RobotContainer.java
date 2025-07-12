@@ -102,7 +102,7 @@ public class RobotContainer {
     new JoystickButton(intakeController, 6).whileTrue(NamedCommands.getCommand("GIRAR CORAL INVERTIDO"));
 
     //limelight
-    new POVButton(controleXbox, 0).onTrue(new AlingToTarget(limelight, swerve, 0, 0));
+    new POVButton(controleXbox, 0).onTrue(new AlingToTarget(limelight, swerve, true));
 
     //reset pigeon
     new ResetPigeon(pigeon, swerve);

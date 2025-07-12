@@ -10,16 +10,14 @@ import frc.robot.subsystems.SwerveSubsystem;
 
 public class AlingToTarget extends Command {
     
-    private double setpointY;
-    private double setpointX;
+    private double setpointY, setpointX;
 
     private final LimelightConfig LimelightConfig;
     
     private Translation2d translation;
     private final SwerveSubsystem subsystem;
     
-    private final PIDController xController;
-    private final PIDController rotationController;
+    private final PIDController xController, rotationController;
     
     // Constantes para ajuste fino
     private static final double kP_ROTATION = 0.1;
@@ -41,10 +39,10 @@ public class AlingToTarget extends Command {
     private static final double TIMEOUT_SECONDS = 5.5;
     private static final double TEMPO_MINIMO_ESTAVEL = 0.5;
     
-    private int tentativas = 0;
-    private double ultimaTx = 0.0;
-    private double ultimoTempoMudanca = 0.0;
-    private boolean ultimoEstadoTarget = false;
+    private static int tentativas = 0;
+    private static double ultimaTx = 0.0;
+    private static double ultimoTempoMudanca = 0.0;
+    private static boolean ultimoEstadoTarget = false;
 
     
     private final Timer timer = new Timer();

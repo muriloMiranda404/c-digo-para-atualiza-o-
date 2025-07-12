@@ -37,4 +37,13 @@ public class LimelightConfig extends SubsystemBase{
     public double[] getTagPose(){
         return Limelight.getEntry("targetpose_robotspace").getDoubleArray(new double[6]);
     }
+    public double getTxnc(){
+        return Limelight.getEntry("txnc").getDouble(0.0);
+    }
+    public double getTync(){
+        return Limelight.getEntry("tync").getDouble(0.0);
+    }
+    public double getPipelineLatency(){
+        return Limelight.getEntry("tl").getDouble(0.0);
+    }
 }

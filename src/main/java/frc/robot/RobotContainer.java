@@ -42,7 +42,7 @@ public class RobotContainer {
   private static final ElevatorSubsytem elevatorSubsytem = ElevatorSubsytem.getInstance();
   private static final IntakeSubsystem intakeSubsystem = IntakeSubsystem.getInstance();
   
-  private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
+  private static Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
   
   public RobotContainer() {
     swerve.setDefaultCommand(swerve.driveCommand(

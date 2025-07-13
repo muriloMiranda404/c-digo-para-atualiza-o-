@@ -16,6 +16,9 @@ public final class Constants {
   public static final class Swerve{
     //velocidade maxima
     public static final double MAX_SPEED = 7.0;
+
+    public static final PIDController drivePID = new PIDController(0.01, 0, 0);
+    public static final PIDController anglePID = new PIDController(0.01, 0, 0);
   }
   
   public static final class Elevator{

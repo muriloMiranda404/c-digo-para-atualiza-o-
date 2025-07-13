@@ -11,6 +11,8 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.ctre.phoenix6.swerve.SwerveDrivetrain;
+import com.ctre.phoenix6.swerve.jni.SwerveJNI.ModuleState;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.PIDConstants;
@@ -25,10 +27,14 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.Odometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Swerve;
+import frc.robot.commands.SwerveModulesPosition;
+import frc.robot.SwerveModules;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.telemetry.SwerveDriveTelemetry;
@@ -57,6 +63,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private PhotonPoseEstimator estimator;
     
     // Método construtor da classe
+    SwerveModulePosition[] module;
     public SwerveSubsystem(File directory) {
         // Seta a telemetria como nível mais alto
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
@@ -105,7 +112,7 @@ public class SwerveSubsystem extends SubsystemBase {
     try
     {
       config = RobotConfig.fromGUISettings();
-
+      
       final boolean enableFeedforward = true;
       // Configure AutoBuilder last
       AutoBuilder.configure(
@@ -193,6 +200,11 @@ public class SwerveSubsystem extends SubsystemBase {
     public void driveFieldOriented(ChassisSpeeds speeds) {
         
         swerveDrive.driveFieldOriented(speeds);
+    }
+
+    public void resetPose(Pose2d pose){
+      swerveDrive.resetOdometry(pose);
+      swerveDrive.swerveDrivePoseEstimator.resetPosition(getHeading(), module, pose);
     }
 
     // Função drive que chamamos em nossa classe de comando Teleoperado

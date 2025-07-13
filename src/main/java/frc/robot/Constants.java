@@ -58,6 +58,8 @@ public final class Constants {
     //entradas digitais 
     public static final int INTAKE_ENCODER = 1;
     public static final int ALGAE_SWICTH = 0;
+    public static final int MIN_ENCODER = 0;
+    public static final int MAX_ENCODER = 360;
 
     //zona segura
     public static final double MIN_INTAKE = 55.0;

@@ -39,8 +39,8 @@ public class IntakeSubsystem extends SubsystemBase{
 
     private IntakeSubsystem(){
 
-        intake = new SparkMax(Intake.INTAKE_MOTOR, SparkMax.MotorType.kBrushless);
-        coral = new SparkMax(Intake.ALGAE_MOTOR, SparkMax.MotorType.kBrushless);
+       intake = new SparkMax(Intake.INTAKE_MOTOR, SparkMax.MotorType.kBrushless);
+       coral = new SparkMax(Intake.ALGAE_MOTOR, SparkMax.MotorType.kBrushless);
 
        intakeConfig = new SparkMaxConfig();
        coralConfig = new SparkMaxConfig();
@@ -64,7 +64,7 @@ public class IntakeSubsystem extends SubsystemBase{
         controller.setTolerance(Intake.INTAKE_TOLERANCE);
 
         encoder = new DutyCycleEncoder(Intake.INTAKE_ENCODER);
-        encoder.setDutyCycleRange(0, 360);
+        encoder.setDutyCycleRange(Intake.MIN_ENCODER, Intake.MAX_ENCODER);
 
         algae_swicth = new DigitalInput(Intake.ALGAE_SWICTH);
     }

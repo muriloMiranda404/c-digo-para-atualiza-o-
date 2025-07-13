@@ -96,18 +96,19 @@ public class ElevatorSubsytem extends SubsystemBase{
             rightMotor.set(output);
            }
            
-           public double getSpeed(){
+        public double getSpeed(){
             return encoder.getRate();
-           }
+       }
 
-           public void stopMotor(){
+       public void stopMotor(){
             leftMotor.stopMotor();
             rightMotor.stopMotor();
-           }
+        }
 
-           public void resetEncoder(){
+        public void resetEncoder(){
             encoder.reset();
-           } 
+        }
+         
         public void periodic(){
         SmartDashboard.putNumber("speed", getSpeed());
         SmartDashboard.putNumber("angulo", getDistance());

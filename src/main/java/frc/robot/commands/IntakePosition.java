@@ -16,9 +16,11 @@ public class IntakePosition extends Command{
         addRequirements(subsystem);
     }
 
+    @Override
     public void initialize(){
         
     }
+    @Override
     public void execute(){
 
       try{  
@@ -26,10 +28,13 @@ public class IntakePosition extends Command{
     } catch(Exception e){
         System.out.println("erro detectado" + e);
     }
+    
     }
+    @Override
     public boolean isFinished(){
         return subsystem.controller.atSetpoint();
     }
+    @Override
     public void end(boolean interrupted){
         subsystem.stopMotor();
     }

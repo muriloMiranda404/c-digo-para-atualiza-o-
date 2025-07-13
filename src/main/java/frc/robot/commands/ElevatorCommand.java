@@ -15,15 +15,20 @@ public class ElevatorCommand extends Command{
         this.setpoint = setpoint;
         addRequirements(subsytem);
     }
+
+    @Override
     public void initialize(){
 
     }
+    @Override
     public void execute(){
         elevatorSubsytem.setPosition(setpoint);
     }
+    @Override
     public void end(boolean interrupted){
         elevatorSubsytem.stopMotor();
     }
+    @Override
     public boolean isFinished(){
         return controller.atSetpoint();
     }

@@ -56,6 +56,7 @@ public class SwerveModulesSubsystem extends SubsystemBase{
         return backRight;
     }
 
+    @Override
     public void periodic(){
         SmartDashboard.putNumber("FrontLeft", frontLeft.getPosition());
         SmartDashboard.putNumber("backLeft", backLeft.getPosition());

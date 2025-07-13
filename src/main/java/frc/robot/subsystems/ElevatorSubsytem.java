@@ -109,6 +109,7 @@ public class ElevatorSubsytem extends SubsystemBase{
             encoder.reset();
         }
          
+        @Override
         public void periodic(){
         SmartDashboard.putNumber("speed", getSpeed());
         SmartDashboard.putNumber("angulo", getDistance());

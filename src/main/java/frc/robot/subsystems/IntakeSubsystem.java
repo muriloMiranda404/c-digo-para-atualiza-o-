@@ -108,6 +108,7 @@ public class IntakeSubsystem extends SubsystemBase{
         intake.stopMotor();
     }
 
+    @Override
     public void periodic(){
         SmartDashboard.putNumber("angulo", getDistance());
         SmartDashboard.putBoolean("fim de curso", algae_swicth.get());

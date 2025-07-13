@@ -202,8 +202,8 @@ public class SwerveSubsystem extends SubsystemBase {
         swerveDrive.driveFieldOriented(speeds);
     }
 
+    //metodo criado para a tentativa de melhorar o andamento do swerve 
     public void resetPose(Pose2d pose){
-      swerveDrive.resetOdometry(pose);
       swerveDrive.swerveDrivePoseEstimator.resetPosition(getHeading(), module, pose);
     }
 

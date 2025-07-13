@@ -1,18 +1,10 @@
 package frc.robot.subsystems;
 
-import org.littletonrobotics.conduit.schema.Joystick;
-
-import com.ctre.phoenix6.hardware.Pigeon2;
-
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
 import frc.robot.SwerveModules;
-import frc.robot.Constants.IDs;
 
 public class SwerveModulesSubsystem extends SubsystemBase{
 
@@ -24,17 +16,13 @@ public class SwerveModulesSubsystem extends SubsystemBase{
         }
         return modules;
     }
-    private final RobotContainer container = new RobotContainer();
     
     private final SwerveModules backRight;
     private final SwerveModules backLeft;
     private final SwerveModules frontRight;
     private final SwerveModules frontLeft;
 
-    private final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
     private final SwerveDriveKinematics kinematics;
-    private final XboxController joystick = container.controleXbox;
-    SwerveSubsystem subsystem;
 
     public SwerveModulesSubsystem(){
 

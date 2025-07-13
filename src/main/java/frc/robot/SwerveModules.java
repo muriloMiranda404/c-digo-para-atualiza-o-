@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.Constants.Swerve;
@@ -19,6 +20,8 @@ public class SwerveModules {
     private int angleID;
     private int encoderID;
     private double encoder_offset;
+
+    private Pigeon2 pigeon = new Pigeon2(9);
 
     public SwerveModules(int driveID, int angleID, int encoderID, double encoder_offset){
         this.driveMotor = new SparkMax(driveID, SparkMax.MotorType.kBrushless);

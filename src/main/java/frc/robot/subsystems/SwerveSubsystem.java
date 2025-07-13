@@ -5,43 +5,28 @@
 package frc.robot.subsystems;
 
 import java.io.File;
-import java.util.Optional;
-import java.util.function.DoubleSupplier;
-import org.photonvision.EstimatedRobotPose;
-import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.ctre.phoenix6.swerve.SwerveDrivetrain;
-import com.ctre.phoenix6.swerve.jni.SwerveJNI.ModuleState;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
+import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Swerve;
-import frc.robot.commands.SwerveModulesPosition;
-import frc.robot.SwerveModules;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
-import org.photonvision.targeting.PhotonPipelineResult;
 
 /** 
  * Classe de subsistema onde fazemos a ponte do nosso código para YAGSL
@@ -52,34 +37,12 @@ public class SwerveSubsystem extends SubsystemBase {
     public SwerveDrive swerveDrive;
     boolean orientation = true;
     Pigeon2 pigeon = new Pigeon2(9);
-
-    //private final PhotonCamera photo = new PhotonCamera("limelight"); 
-    private AprilTagFieldLayout aprilTagFieldLayout;
-    private final Transform3d robotToCam = new Transform3d(
-        new Translation3d(0.5, 0.0, 0.5), // Ajuste estas coordenadas para a posição real da sua câmera
-        new Rotation3d(0, 0, 0)); // Ajuste estes ângulos para a orientação real da sua câmera
-    // Substitua a declaração e inicialização do estimator por:
-
-    private PhotonPoseEstimator estimator;
     
     // Método construtor da classe
     SwerveModulePosition[] module;
     public SwerveSubsystem(File directory) {
         // Seta a telemetria como nível mais alto
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
-        
-        try {
-            aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(
-                AprilTagFields.k2024Crescendo.m_resourceFile);
-              
-                estimator = new PhotonPoseEstimator(
-                    aprilTagFieldLayout,
-                    PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-                    robotToCam);
-                
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao carregar o layout de AprilTags", e);
-        }
             try {
             swerveDrive = new SwerveParser(directory).createSwerveDrive(Swerve.MAX_SPEED);
         } catch (Exception e) {
@@ -94,15 +57,6 @@ public class SwerveSubsystem extends SubsystemBase {
     public void periodic() {
         swerveDrive.updateOdometry();
         // Atualiza a estimativa de pose com a visão
-        Optional<EstimatedRobotPose> result = estimator.update(PhotonPipelineResult.class.cast(robotToCam));
-    
-        if(result.isPresent()){
-            EstimatedRobotPose pose = result.get();
-            swerveDrive.addVisionMeasurement(
-                pose.estimatedPose.toPose2d(), 
-                pose.timestampSeconds
-            );
-        }
     }
 
       public void setupPathPlanner() {
@@ -250,7 +204,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public Rotation2d getHeading(){
-    return Rotation2d.fromDegrees(Math.IEEEremainder(swerveDrive.getGyro().getRotation3d().getAngle(), 360));
+    return Rotation2d.fromDegrees(Math.IEEEremainder(pigeon.getAccumGyroZ(true).getValueAsDouble(), 360));
   }
   
 

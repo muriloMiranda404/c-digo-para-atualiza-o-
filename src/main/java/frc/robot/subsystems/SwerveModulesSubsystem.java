@@ -4,6 +4,7 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModules;
 import frc.robot.Constants.IDs;
@@ -53,5 +54,12 @@ public class SwerveModulesSubsystem extends SubsystemBase{
     }
     public SwerveModules getBackRight(){
         return backRight;
+    }
+
+    public void periodic(){
+        SmartDashboard.putNumber("FrontLeft", frontLeft.getPosition());
+        SmartDashboard.putNumber("backLeft", backLeft.getPosition());
+        SmartDashboard.putNumber("Frontright", frontRight.getPosition());
+        SmartDashboard.putNumber("BackRight", backRight.getPosition());
     }
 }

@@ -9,6 +9,15 @@ import frc.robot.SwerveModules;
 import frc.robot.Constants.IDs;
 
 public class SwerveModulesSubsystem extends SubsystemBase{
+
+    private static SwerveModulesSubsystem modules = new SwerveModulesSubsystem();
+
+    public static SwerveModulesSubsystem getInstance(){
+        if(modules == null){
+            return new SwerveModulesSubsystem();
+        }
+        return modules;
+    }
     
     private final SwerveModules backRight;
     private final SwerveModules backLeft;

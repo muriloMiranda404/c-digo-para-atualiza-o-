@@ -17,6 +17,7 @@ import frc.robot.commands.ResetPigeon;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightConfig;
+import frc.robot.subsystems.SwerveModulesSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -41,6 +42,7 @@ public class RobotContainer {
   
   private static final ElevatorSubsytem elevatorSubsytem = ElevatorSubsytem.getInstance();
   private static final IntakeSubsystem intakeSubsystem = IntakeSubsystem.getInstance();
+  private static final SwerveModulesSubsystem swerveModules = SwerveModulesSubsystem.getInstance();
   
   private static Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
   

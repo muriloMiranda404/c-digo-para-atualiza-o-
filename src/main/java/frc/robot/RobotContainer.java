@@ -37,8 +37,8 @@ public class RobotContainer {
   private static final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
   private static final LimelightConfig limelight = new LimelightConfig();
 
-  public static final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
-  public static final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL_ID);
+  public final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
+  public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL_ID);
   
   private static final ElevatorSubsytem elevatorSubsytem = ElevatorSubsytem.getInstance();
   private static final IntakeSubsystem intakeSubsystem = IntakeSubsystem.getInstance();

@@ -4,7 +4,10 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.Controller;
+import frc.robot.Constants.IDs;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class TurnRobot extends Command{
@@ -14,6 +17,7 @@ public class TurnRobot extends Command{
    private SwerveSubsystem subsystem;
    private double angulacao;
    private PIDController controller;
+   private XboxController joystick = new XboxController(Controller.DRIVE_CONTROLLER);
 
    public TurnRobot(Pigeon2 pigeon, SwerveSubsystem subsystem, double angulacao){
     this.pigeon = pigeon;
@@ -32,20 +36,36 @@ public class TurnRobot extends Command{
    @Override
    public void execute(){
 
+    try{
     double yaw = pigeon.getYaw().getValueAsDouble();
     double output = controller.calculate(angulacao, yaw);
 
+    if(yaw >= angulacao){
+        pigeon.setYaw(angulacao);
+        subsystem.drive(translation, 0, true);
+    }
+
     translation = new Translation2d(0, 0);
     subsystem.drive(translation, output, true);
+
+        } catch(Exception e){
+            System.out.println("erro ao executar comando");
+            this.cancel();
+        }
    }
 
    @Override
    public boolean isFinished(){
-    return controller.atSetpoint();
+    return controller.atSetpoint() || joystick.getAButton();
    }
 
    @Override
    public void end(boolean interrupted){
+    try{
     subsystem.drive(translation, 0, true);
+   } catch(Exception e){
+    System.out.println("erro ao finalizar");
+    this.cancel();
    }
+}
 }

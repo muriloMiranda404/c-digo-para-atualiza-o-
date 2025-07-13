@@ -204,7 +204,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public Rotation2d getHeading(){
-    return Rotation2d.fromDegrees(Math.IEEEremainder(pigeon.getAccumGyroZ(true).getValueAsDouble(), 360));
+    return Rotation2d.fromDegrees(Math.IEEEremainder(pigeon.getAccumGyroZ(false).getValueAsDouble(), 360));
   }
   
 

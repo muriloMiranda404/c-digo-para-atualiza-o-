@@ -44,7 +44,7 @@ public class RobotContainer {
   private static final IntakeSubsystem intakeSubsystem = IntakeSubsystem.getInstance();
   private static final SwerveModulesSubsystem swerveModules = SwerveModulesSubsystem.getInstance();
   
-  private static Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
+  private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
   
   public RobotContainer() {
     swerve.setDefaultCommand(swerve.driveCommand(
@@ -107,7 +107,7 @@ public class RobotContainer {
     new POVButton(controleXbox, 0).onTrue(new AlingToTarget(limelight, swerve, true));
 
     //reset pigeon
-    new ResetPigeon(pigeon, swerve);
+    new JoystickButton(controleXbox, 10).onTrue(new ResetPigeon(pigeon, swerve));
 
     ////////////////////////////////////// FIM DO COMANDO TELEOPERADO////////////////////////////////////////////////////
 

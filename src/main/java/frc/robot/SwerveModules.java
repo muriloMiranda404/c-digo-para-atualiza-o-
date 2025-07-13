@@ -38,4 +38,8 @@ public class SwerveModules {
     public double getVelocity(){
         return driveMotor.get();
     }
+    public void setPosition(double position){
+        absoluteEncoder.setPosition(position);
+        System.out.println("a posição agora é " + (absoluteEncoder.getAbsolutePosition().getValueAsDouble() - encoder_offset));
+    }
 }

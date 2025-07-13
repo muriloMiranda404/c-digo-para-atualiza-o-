@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import frc.robot.Constants.Autonomous;
@@ -14,6 +10,7 @@ import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakePosition;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.ResetPigeon;
+import frc.robot.commands.TurnRobot;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightConfig;
@@ -44,7 +41,7 @@ public class RobotContainer {
   private static final IntakeSubsystem intakeSubsystem = IntakeSubsystem.getInstance();
   private static final SwerveModulesSubsystem swerveModules = SwerveModulesSubsystem.getInstance();
   
-  private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
+  private static Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
   
   public RobotContainer() {
     swerve.setDefaultCommand(swerve.driveCommand(
@@ -106,8 +103,9 @@ public class RobotContainer {
     //limelight
     new POVButton(controleXbox, 0).onTrue(new AlingToTarget(limelight, swerve, true));
 
-    //reset pigeon
+    //reset pigeon && turn robot
     new JoystickButton(controleXbox, 10).onTrue(new ResetPigeon(pigeon, swerve));
+    new JoystickButton(controleXbox, 2).onTrue(new TurnRobot(pigeon, swerve, 45));
 
     ////////////////////////////////////// FIM DO COMANDO TELEOPERADO////////////////////////////////////////////////////
 
@@ -166,7 +164,7 @@ public class RobotContainer {
       case 2:
       return controleXbox.getLeftX() * inverter * marcha;
       case 3:
-      return controleXbox.getRightX() *  marcha;  
+      return controleXbox.getRightX() * marcha;  
     }
     return choose;
   }

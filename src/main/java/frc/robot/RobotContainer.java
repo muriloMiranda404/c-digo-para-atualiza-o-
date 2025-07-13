@@ -32,7 +32,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 public class RobotContainer {
 
   private static final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-  private static final LimelightConfig limelight = new LimelightConfig();
+  private static final LimelightConfig limelight = LimelightConfig.getInstance();
 
   public final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
   public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL_ID);
@@ -51,8 +51,7 @@ public class RobotContainer {
     configureBindings();
   }
 
-  private void configureBindings() {
-    
+  private void configureBindings() {    
     //posições do elevador CORAL
     NamedCommands.registerCommand("L4", new ElevatorCommand(elevatorSubsytem, Elevator.L4_POSITION));
     NamedCommands.registerCommand("L3", new ElevatorCommand(elevatorSubsytem, Elevator.L3_POSITION));

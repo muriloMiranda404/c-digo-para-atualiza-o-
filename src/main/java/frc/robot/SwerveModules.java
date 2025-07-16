@@ -43,6 +43,6 @@ public class SwerveModules {
     }
     public void setPosition(double position){
         absoluteEncoder.setPosition(position);
-        System.out.println("a posição agora é " + (absoluteEncoder.getAbsolutePosition().getValueAsDouble() - encoder_offset));
+        System.out.println("a posição agora é " + getPosition());
     }
 }

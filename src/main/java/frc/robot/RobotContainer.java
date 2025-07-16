@@ -41,7 +41,7 @@ public class RobotContainer {
   private static final IntakeSubsystem intakeSubsystem = IntakeSubsystem.getInstance();
   private static final SwerveModulesSubsystem swerveModules = SwerveModulesSubsystem.getInstance();
   
-  private static Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
+  private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
   
   public RobotContainer() {
     swerve.setDefaultCommand(swerve.driveCommand(
@@ -136,6 +136,7 @@ public class RobotContainer {
     .andThen(NamedCommands.getCommand("CORAL L4"))
     );
 
+    
     ///////////////////////////////////////// FIM DOS COMANDOS AUTOMATICOS ///////////////////////////////////////////////
   }
   public Command getAutonomousCommand() {

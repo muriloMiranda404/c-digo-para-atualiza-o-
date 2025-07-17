@@ -136,7 +136,7 @@ public class RobotContainer {
     .andThen(NamedCommands.getCommand("CORAL L4"))
     );
 
-    
+
     ///////////////////////////////////////// FIM DOS COMANDOS AUTOMATICOS ///////////////////////////////////////////////
   }
   public Command getAutonomousCommand() {

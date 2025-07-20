@@ -17,6 +17,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -55,6 +57,11 @@ public class SwerveSubsystem extends SubsystemBase {
     
     @Override
     public void periodic() {
+      //teste
+      StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
+    .getStructTopic("MyPose", Pose2d.struct).publish();
+     publisher.set(new Pose2d());
+
         swerveDrive.updateOdometry();
         // Atualiza a estimativa de pose com a visão
     }
@@ -113,15 +120,15 @@ public class SwerveSubsystem extends SubsystemBase {
           },
           this
           // Reference to this subsystem to set requirements
-                           );
-
-    } catch (Exception e)
-    {
-      // Handle exception as needed
-      e.printStackTrace();
-    }
+          );
+          
+        } catch (Exception e)
+        {
+          // Handle exception as needed
+          e.printStackTrace();
+        }
   }
-
+  
   //Movimenta o robô com o joystick esquerdo, e mira o robo no ângulo no qual o joystick está apontando
   public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier headingX,
                               DoubleSupplier headingY)
@@ -148,6 +155,7 @@ public class SwerveSubsystem extends SubsystemBase {
                                                       yInput*swerveDrive.getMaximumChassisVelocity(),
                                                       angularRotationX.getAsDouble()*swerveDrive.getMaximumChassisAngularVelocity()));
     });
+
     
   }
 

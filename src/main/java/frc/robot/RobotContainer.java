@@ -101,6 +101,7 @@ public class RobotContainer {
 
     //limelight
     new POVButton(controleXbox, 0).onTrue(new AlingToTarget(limelight, swerve, true));
+    new POVButton(controleXbox, 270).whileTrue(new AlingToTarget(limelight, swerve, 25.0, 14.0));
 
     //reset pigeon && turn robot
     new JoystickButton(controleXbox, 10).onTrue(new ResetPigeon(pigeon, swerve));

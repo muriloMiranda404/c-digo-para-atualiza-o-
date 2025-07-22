@@ -34,13 +34,15 @@ public class SwerveModules {
         this.anglePID.enableContinuousInput(-180, 180);
     }
 
+
     public double getPosition(){
         return absoluteEncoder.getAbsolutePosition().getValueAsDouble() - encoder_offset;
     }
 
     public double getVelocity(){
-        return driveMotor.get();
+      return driveMotor.get();
     }
+    
     public void setPosition(double position){
         absoluteEncoder.setPosition(position);
         System.out.println("a posição agora é " + getPosition());

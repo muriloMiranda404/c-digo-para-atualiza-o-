@@ -8,9 +8,9 @@ public final class Constants {
   public static final class Controller{
     //joystick constants 
     public static final int DRIVE_CONTROLLER = 0;
-    public static final double DEADBAND = 0.1;
-
     public static final int INTAKE_CONTROL_ID = 1;
+    
+    public static final double DEADBAND = 0.1;
   }
 
   public static final class Swerve{

@@ -21,9 +21,14 @@ public class ResetPigeon extends Command{
     
     @Override
     public void execute() {
+        try{
         pigeon.reset();
         subsystem.swerveDrive.zeroGyro();
         System.out.println("Pigeon Resetado");
+        } catch(Exception e ){
+            System.out.println("exeção capturada: " + e);
+            subsystem.drive(new Translation2d(0, 0), 0, true);
+        }
     }
     
     @Override

@@ -57,11 +57,6 @@ public class SwerveSubsystem extends SubsystemBase {
     
     @Override
     public void periodic() {
-      //teste
-      StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
-    .getStructTopic("MyPose", Pose2d.struct).publish();
-     publisher.set(new Pose2d());
-
         swerveDrive.updateOdometry();
         // Atualiza a estimativa de pose com a visão
     }

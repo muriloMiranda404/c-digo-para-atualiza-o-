@@ -4,7 +4,7 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
-import frc.robot.Constants.Swerve;
+import frc.robot.constants.Constants.Swerve;
 
 public class SwerveModules {
     

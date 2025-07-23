@@ -6,7 +6,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.Controller;
+import frc.robot.constants.Constants.Controller;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class TurnRobot extends Command{

@@ -83,8 +83,8 @@ public class ElevatorSubsytem extends SubsystemBase{
        }
 
        public void stopMotor(){
-            leftMotor.stopMotor();
-            rightMotor.stopMotor();
+            leftMotor.setVoltage(0);
+            rightMotor.setVoltage(0);
         }
 
         public void resetEncoder(){

@@ -85,8 +85,8 @@ public class IntakeSubsystem extends SubsystemBase{
        intake.set(output);
     }
     public void stopMotor(){
-        coral.stopMotor();
-        intake.stopMotor();
+        coral.setVoltage(0);
+        intake.setVoltage(0);
     }
 
     public DutyCycleEncoder getIntakeEncoder(){

@@ -9,6 +9,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.Elevator;
@@ -28,12 +29,14 @@ public class ElevatorSubsytem extends SubsystemBase{
 
     public static Encoder encoder;
 
+    Timer timer = new Timer();
+
         
     public ElevatorSubsytem(){
             
         rightMotorConfig = new SparkMaxConfig();
         leftMotorConfig = new SparkMaxConfig();
-            
+
         rightMotorConfig
         .inverted(false)
         .idleMode(IdleMode.kCoast);

@@ -27,16 +27,7 @@ public class IntakeSubsystem extends SubsystemBase{
     public SparkMaxConfig coralConfig;
     public SparkMaxConfig globalCofig;
 
-    private static IntakeSubsystem subsystem;
-    
-    public static IntakeSubsystem getInstance(){
-        if(subsystem == null){
-            return new IntakeSubsystem();
-        }
-        return subsystem;
-    }
-
-    private IntakeSubsystem(){
+    public IntakeSubsystem(){
 
        intake = new SparkMax(Intake.INTAKE_MOTOR, SparkMax.MotorType.kBrushless);
        coral = new SparkMax(Intake.ALGAE_MOTOR, SparkMax.MotorType.kBrushless);

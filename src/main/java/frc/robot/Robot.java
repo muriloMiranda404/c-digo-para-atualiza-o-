@@ -20,16 +20,14 @@ public class Robot extends TimedRobot {
 
   public static boolean trava = false;
   //elevador 
-  ElevatorSubsytem elevador = ElevatorSubsytem.getInstance();
+  ElevatorSubsytem elevador = RobotContainer.getElevatorInstance();
   Encoder elev_encoder = elevador.getElevatorEncoder();
   PIDController elev_controller = elevador.getPID();
   double output_elev;
 
+
   //intake
-  IntakeSubsystem intake = IntakeSubsystem.getInstance();
-  DutyCycleEncoder encoder_intake = intake.getIntakeEncoder();
-  PIDController intake_controller = intake.getIntakePID();
-  double output_intake;
+  IntakeSubsystem intake = RobotContainer.getIntakeInstance();
 
   Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
   

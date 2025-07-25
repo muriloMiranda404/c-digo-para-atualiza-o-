@@ -14,15 +14,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.Elevator;
 
 public class ElevatorSubsytem extends SubsystemBase{
-    
-    public static ElevatorSubsytem elevator;
-    
-    public static ElevatorSubsytem getInstance(){
-        if( elevator == null){
-            return new ElevatorSubsytem();
-        }
-        return elevator;
-    }
 
     public static SparkMaxConfig rightMotorConfig;
     public static SparkMaxConfig leftMotorConfig;
@@ -38,7 +29,7 @@ public class ElevatorSubsytem extends SubsystemBase{
     public static Encoder encoder;
 
         
-    private ElevatorSubsytem(){
+    public ElevatorSubsytem(){
             
         rightMotorConfig = new SparkMaxConfig();
         leftMotorConfig = new SparkMaxConfig();

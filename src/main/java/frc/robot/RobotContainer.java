@@ -37,9 +37,9 @@ public class RobotContainer {
   public final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
   public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL_ID);
   
-  private static final ElevatorSubsytem elevatorSubsytem = ElevatorSubsytem.getInstance();
-  private static final IntakeSubsystem intakeSubsystem = IntakeSubsystem.getInstance();
-  private static final SwerveModulesSubsystem swerveModules = SwerveModulesSubsystem.getInstance();
+  public static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
+  public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public static final SwerveModulesSubsystem swerveModules = new SwerveModulesSubsystem();
   
   private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
   
@@ -165,4 +165,25 @@ public class RobotContainer {
     
     return choose;
   }
+
+  public static ElevatorSubsytem getElevatorInstance(){
+    if(elevatorSubsytem == null){
+        return new ElevatorSubsytem();
+    }
+    return elevatorSubsytem;
+}
+
+public static IntakeSubsystem getIntakeInstance(){
+  if(intakeSubsystem == null){
+    return new IntakeSubsystem();
+  }
+  return intakeSubsystem;
+}
+
+public static SwerveModulesSubsystem getModulesInstance(){
+  if(swerveModules == null){
+    return new SwerveModulesSubsystem();
+  }
+  return swerveModules;
+}
 }

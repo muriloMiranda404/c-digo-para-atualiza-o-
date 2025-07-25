@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -34,7 +35,7 @@ public class RobotContainer {
   private static final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
   private static final LimelightConfig limelight = LimelightConfig.getInstance();
 
-  public final XboxController controleXbox = new XboxController(Controller.DRIVE_CONTROLLER);
+  public final CommandXboxController controleXbox = new CommandXboxController(Controller.DRIVE_CONTROLLER);
   public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL_ID);
   
   public static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
@@ -51,7 +52,7 @@ public class RobotContainer {
     configureBindings();
   }
 
-  private void configureBindings() {    
+  private void configureBindings() {   
     //posições do elevador CORAL
     NamedCommands.registerCommand("L4", new ElevatorCommand(elevatorSubsytem, Elevator.L4_POSITION));
     NamedCommands.registerCommand("L3", new ElevatorCommand(elevatorSubsytem, Elevator.L3_POSITION));
@@ -100,12 +101,12 @@ public class RobotContainer {
     new JoystickButton(intakeController, 6).whileTrue(NamedCommands.getCommand("GIRAR CORAL INVERTIDO"));
 
     //limelight
-    new POVButton(controleXbox, 0).onTrue(new AlingToTarget(limelight, swerve, true));
-    new POVButton(controleXbox, 270).whileTrue(new AlingToTarget(limelight, swerve, 25.0, 14.0));
+    new POVButton(controleXbox.getHID(), 0).onTrue(new AlingToTarget(limelight, swerve, true));
+    new POVButton(controleXbox.getHID(), 270).whileTrue(new AlingToTarget(limelight, swerve, 25.0, 14.0));
 
     //reset pigeon && turn robot
-    new JoystickButton(controleXbox, 10).onTrue(new ResetPigeon(pigeon, swerve));
-    new JoystickButton(controleXbox, 2).onTrue(new TurnRobot(pigeon, swerve, 45));
+    new JoystickButton(controleXbox.getHID(), 10).onTrue(new ResetPigeon(pigeon, swerve));
+    new JoystickButton(controleXbox.getHID(), 2).onTrue(new TurnRobot(pigeon, swerve, 45));
 
     ////////////////////////////////////// FIM DO COMANDO TELEOPERADO////////////////////////////////////////////////////
 
@@ -150,8 +151,8 @@ public class RobotContainer {
     int inverter = DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1;
     double marcha = 0.5;
     
-    if(controleXbox.getRightBumperButton()) marcha = 1.0;
-    if(controleXbox.getLeftBumperButton()) marcha = 0.2;
+    if(controleXbox.getHID().getRightBumperButton()) marcha = 1.0;
+    if(controleXbox.getHID().getLeftBumperButton()) marcha = 0.2;
     else marcha = 0.5;
  
     switch (choose) {

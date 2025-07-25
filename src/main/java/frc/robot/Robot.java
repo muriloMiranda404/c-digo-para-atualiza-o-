@@ -41,14 +41,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-
-    encoder_intake.setDutyCycleRange(Intake.MIN_ENCODER, Intake.MAX_ENCODER);
-    intake_controller.setTolerance(Intake.INTAKE_TOLERANCE);
-
-    elev_controller.setTolerance(Elevator.TOLERANCE_ELEVATOR);
-    elev_encoder.setDistancePerPulse(Elevator.PULSE1/Elevator.PULSE2);
-    elev_encoder.setReverseDirection(Elevator.INVERTED);
-    
     CameraServer.startAutomaticCapture();
     pigeon.reset();
   }
@@ -83,12 +75,9 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     
-    output_intake = intake.calculateOutput(intake.getDistance(), Intake.ALGAE_POSITION);
-    intake.setPosition(output_intake);
+    intake.setPosition(Intake.ABERTURA_COMUM);
     
-    output_elev = elevador.calculateOutput(elevador.getDistance(), Elevator.L1_POSITION);
-    elevador.setOutput(output_elev);
-    elevador.resetEncoder();
+    elevador.setOutput(Elevator.L1_POSITION);
   }
 
   @Override

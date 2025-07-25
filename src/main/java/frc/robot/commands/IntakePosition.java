@@ -23,22 +23,8 @@ public class IntakePosition extends Command{
     public void execute(){
 
       try{  
-        double angulo = intake.getDistance();
-        double output = intake.calculateOutput(angulo, setpoint);
 
-        if(angulo < Intake.MIN_INTAKE){
-            if(output > 0) output = 0.0;
-
-            if(setpoint > Intake.MIN_INTAKE) setpoint = Intake.MIN_INTAKE;
-        }
-
-        if(angulo > Intake.MAX_INTAKE){
-            if(output > 0.0) output = 0.0;
-
-            if(setpoint > Intake.MAX_INTAKE) setpoint = Intake.MAX_INTAKE;
-        }
-
-      intake.setPosition(output);
+      intake.setPosition(setpoint);
       
     } catch(Exception e){
         intake.stopMotor();

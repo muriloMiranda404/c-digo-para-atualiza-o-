@@ -73,13 +73,25 @@ public class IntakeSubsystem extends SubsystemBase{
     public double getDistance(){
         return encoder.get() * 360;
     }
-
-    public double calculateOutput(double medido, double setpoint){
-        return controller.calculate(medido, setpoint);
-    }
     
-    public void setPosition(double saida){
-       intake.set(saida);
+    public void setPosition(double setpoint){
+
+        double angulo = getDistance();
+        double output = controller.calculate(angulo, setpoint);
+
+        if(angulo < Intake.MIN_INTAKE){
+            if(output > 0) output = 0.0;
+
+            if(setpoint > Intake.MIN_INTAKE) setpoint = Intake.MIN_INTAKE;
+        }
+
+        if(angulo > Intake.MAX_INTAKE){
+            if(output > 0.0) output = 0.0;
+
+            if(setpoint > Intake.MAX_INTAKE) setpoint = Intake.MAX_INTAKE;
+        }
+
+       intake.set(output);
     }
     public void stopMotor(){
         coral.stopMotor();

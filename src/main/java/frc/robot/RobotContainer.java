@@ -146,19 +146,14 @@ public class RobotContainer {
 
   //marcha
   public double setChoose(int choose){
-    int inverter = 1;
 
+    int inverter = DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1;
     double marcha = 0.5;
     
     if(controleXbox.getRightBumperButton()) marcha = 1.0;
     if(controleXbox.getLeftBumperButton()) marcha = 0.2;
     else marcha = 0.5;
-    
-    if(DriverStation.getAlliance().get() == Alliance.Red){
-      inverter = -1;
-    } else {
-      inverter = 1;
-    }    
+ 
     switch (choose) {
       case 1:
         return controleXbox.getLeftY() * inverter * marcha;
@@ -167,6 +162,7 @@ public class RobotContainer {
       case 3:
       return controleXbox.getRightX() * marcha;  
     }
+    
     return choose;
   }
 }

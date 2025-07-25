@@ -38,12 +38,17 @@ public final class Constants {
     //PID e derivados
     public static final double TOLERANCE_ELEVATOR = 30.0;
     public static final PIDController ELEVATOR_PID = new PIDController(0.01, 0, 0);
-
+    
     //entradas digitais
     public static final int UP_SWITCH = 3;
     public static final int DOWN_SWITCH = 2;
     public static final int ENCODER_A = 6;
     public static final int ENCODER_B = 6;
+
+    //configurações dos componentes
+    public static final double PULSE1 = 360.0;
+    public static final double PULSE2 = 2048.0;
+    public static final boolean INVERTED = true;
   }
 
   public static final class Intake{
@@ -71,6 +76,7 @@ public final class Constants {
     public static final double ALGAE_POSITION = 225.0;
     public static final double CORAL_L4 = 92.0;
     public static final double ABERTURA_COMUM = 72.0;
+
   }
 
   public static final class Autonomous{

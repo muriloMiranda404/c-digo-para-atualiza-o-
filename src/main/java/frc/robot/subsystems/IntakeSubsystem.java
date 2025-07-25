@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import frc.robot.constants.Constants.Intake;
 
 public class IntakeSubsystem extends SubsystemBase{
@@ -61,10 +60,8 @@ public class IntakeSubsystem extends SubsystemBase{
        coral.configure(coralConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
         controller = Intake.INTAKE_PID;
-        controller.setTolerance(Intake.INTAKE_TOLERANCE);
 
         encoder = new DutyCycleEncoder(Intake.INTAKE_ENCODER);
-        encoder.setDutyCycleRange(Intake.MIN_ENCODER, Intake.MAX_ENCODER);
 
         algae_swicth = new DigitalInput(Intake.ALGAE_SWICTH);
     }
@@ -76,36 +73,33 @@ public class IntakeSubsystem extends SubsystemBase{
     public double getDistance(){
         return encoder.get() * 360;
     }
-    public void setPosition(double setpoint){
-        double ang = getDistance();
-        double output = controller.calculate(ang, setpoint);
 
-        if (ang < Intake.MIN_INTAKE){ 
-            if (output > 0.0) output = 0.0;
-
-            if (setpoint < Intake.MIN_INTAKE) setpoint = Intake.MIN_INTAKE;
-        }
-
-        if (ang > Intake.MAX_INTAKE){ 
-            if (output > 0.0) output = 0.0;
-
-            if (setpoint > Intake.MAX_INTAKE) setpoint = Intake.MAX_INTAKE;
-        }
-        
-        intake.set(output);
-
-        if(Robot.trava == true){
-            coral.set(0.2);
-        }
-
-        if(!algae_swicth.get() && Robot.trava == true){
-            Robot.trava = false;
-            coral.set(0);
-        }
+    public double calculateOutput(double medido, double setpoint){
+        return controller.calculate(medido, setpoint);
+    }
+    
+    public void setPosition(double saida){
+       intake.set(saida);
     }
     public void stopMotor(){
         coral.stopMotor();
         intake.stopMotor();
+    }
+
+    public DutyCycleEncoder getIntakeEncoder(){
+        return encoder;
+    }
+
+    public PIDController getIntakePID(){
+        return controller;
+    }
+
+    public DigitalInput getCoralSwicth(){
+        return algae_swicth;
+    }
+
+    public boolean atSetpoint(){
+        return controller.atSetpoint();
     }
 
     @Override
@@ -114,3 +108,8 @@ public class IntakeSubsystem extends SubsystemBase{
         SmartDashboard.putBoolean("fim de curso", algae_swicth.get());
     }
 }
+
+/*tem ideia:
+ * se nãi der certo, tentar colocar no comando para mudança de posição.
+ * Por exemplo, colocar o maximo e o minimo do intake no comnado, fim de curso e stc...
+ */

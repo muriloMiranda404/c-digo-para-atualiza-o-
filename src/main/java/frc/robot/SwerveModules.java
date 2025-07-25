@@ -8,20 +8,20 @@ import frc.robot.constants.Constants.Swerve;
 
 public class SwerveModules {
     
-    private static SparkMax driveMotor;
-    private static SparkMax angleMotor;
+    private SparkMax driveMotor;
+    private SparkMax angleMotor;
 
-    private static CANcoder absoluteEncoder;
+    private CANcoder absoluteEncoder;
 
-    private static PIDController drivePID;
-    private static PIDController anglePID;
+    private PIDController drivePID;
+    private PIDController anglePID;
 
-    private static int driveID;
-    private static int angleID;
-    private static int encoderID;
-    private static double encoder_offset;
+    private int driveID;
+    private int angleID;
+    private int encoderID;
+    private double encoder_offset;
 
-    private static Pigeon2 pigeon = new Pigeon2(9);
+    private Pigeon2 pigeon = new Pigeon2(9);
 
     public SwerveModules(int driveID, int angleID, int encoderID, double encoder_offset){
         this.driveMotor = new SparkMax(driveID, SparkMax.MotorType.kBrushless);

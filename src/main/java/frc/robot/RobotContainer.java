@@ -48,8 +48,7 @@ public class RobotContainer {
     swerve.setDefaultCommand(swerve.driveCommand(
       () -> MathUtil.applyDeadband(setChoose(1), Controller.DEADBAND),
       () -> MathUtil.applyDeadband(setChoose(2), Controller.DEADBAND),
-      () -> MathUtil.applyDeadband(setChoose(3), Controller.DEADBAND),
-      () -> MathUtil.applyDeadband(setChoose(4), Controller.DEADBAND)));
+      () -> MathUtil.applyDeadband(setChoose(3), Controller.DEADBAND)));
 
     configureDriveBindings();
     configureMechanismBindings();
@@ -57,6 +56,8 @@ public class RobotContainer {
 
   private void configureDriveBindings() {   
     
+    driveController.start().onTrue(new TurnRobot(pigeon, swerve, 0.0));
+
     //limelight
     new POVButton(driveController.getHID(), 270).whileTrue(new AlingToTarget(limelight, swerve, true));
 

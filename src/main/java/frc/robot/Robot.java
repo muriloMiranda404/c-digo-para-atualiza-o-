@@ -1,15 +1,10 @@
 package frc.robot;
 
-import com.ctre.phoenix6.hardware.Pigeon2;
-
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.constants.Constants.Elevator;
-import frc.robot.constants.Constants.IDs;
 import frc.robot.constants.Constants.Intake;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -17,8 +12,8 @@ import frc.robot.subsystems.SwerveSubsystem;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
   public static boolean trava = false;
+
   //elevador 
   ElevatorSubsytem elevador = RobotContainer.getElevatorInstance();
 

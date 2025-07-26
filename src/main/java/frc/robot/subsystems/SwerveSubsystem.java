@@ -59,6 +59,10 @@ public class SwerveSubsystem extends SubsystemBase {
         // Atualiza a estimativa de pose com a visão
     }
 
+    public void resetPigeon(){
+      pigeon.reset();
+    }
+
       public void setupPathPlanner() {
     // Load the RobotConfig from the GUI settings. You should probably
     // store this in your Constants file

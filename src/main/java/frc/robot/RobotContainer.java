@@ -200,4 +200,11 @@ public static SwerveModulesSubsystem getModulesInstance(){
   }
   return swerveModules;
 }
+
+public static SwerveSubsystem getSwerveInstance(){
+  if(swerve == null){
+    return new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
+  }
+  return swerve;
+}
 }

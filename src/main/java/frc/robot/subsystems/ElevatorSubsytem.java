@@ -28,9 +28,6 @@ public class ElevatorSubsytem extends SubsystemBase{
     public static DigitalInput downSwitch;
 
     public static Encoder encoder;
-
-    Timer timer = new Timer();
-
         
     public ElevatorSubsytem(){
             
@@ -64,6 +61,11 @@ public class ElevatorSubsytem extends SubsystemBase{
         public void setSpeed(double speed){
             leftMotor.set(speed);
             rightMotor.set(speed);
+        }
+
+        public void configureElevator(){
+            encoder.setDistancePerPulse(Elevator.PULSE1/Elevator.PULSE2);
+            encoder.setReverseDirection(Elevator.INVERTED);
         }
         
         public double getDistance(){

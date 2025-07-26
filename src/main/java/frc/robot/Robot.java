@@ -4,7 +4,6 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -14,6 +13,7 @@ import frc.robot.constants.Constants.IDs;
 import frc.robot.constants.Constants.Intake;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -21,15 +21,12 @@ public class Robot extends TimedRobot {
   public static boolean trava = false;
   //elevador 
   ElevatorSubsytem elevador = RobotContainer.getElevatorInstance();
-  Encoder elev_encoder = elevador.getElevatorEncoder();
-  PIDController elev_controller = elevador.getPID();
-  double output_elev;
-
 
   //intake
   IntakeSubsystem intake = RobotContainer.getIntakeInstance();
 
-  Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
+  //swerve
+  SwerveSubsystem swerve = RobotContainer.getSwerveInstance();
   
   private final RobotContainer m_robotContainer;
   
@@ -39,8 +36,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+
+    intake.configureIntake();
+
+    elevador.configureElevator();
+
     CameraServer.startAutomaticCapture();
-    pigeon.reset();
+    swerve.resetPigeon();
   }
   
   @Override

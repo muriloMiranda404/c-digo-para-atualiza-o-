@@ -105,6 +105,10 @@ public class IntakeSubsystem extends SubsystemBase{
         return controller.atSetpoint();
     }
 
+    public void configureIntake(){
+        encoder.setDutyCycleRange(Intake.MIN_ENCODER, Intake.MAX_ENCODER);
+    }
+
     @Override
     public void periodic(){
         SmartDashboard.putNumber("angulo", getDistance());

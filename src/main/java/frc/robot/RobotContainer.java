@@ -48,8 +48,9 @@ public class RobotContainer {
     swerve.setDefaultCommand(swerve.driveCommand(
       () -> MathUtil.applyDeadband(setChoose(1), Controller.DEADBAND),
       () -> MathUtil.applyDeadband(setChoose(2), Controller.DEADBAND),
-      () -> MathUtil.applyDeadband(setChoose(3), Controller.DEADBAND)));
-      
+      () -> MathUtil.applyDeadband(setChoose(3), Controller.DEADBAND),
+      () -> MathUtil.applyDeadband(setChoose(4), Controller.DEADBAND)));
+
     configureDriveBindings();
     configureMechanismBindings();
   }
@@ -67,7 +68,7 @@ public class RobotContainer {
     new JoystickButton(driveController.getHID(), 2).onTrue(new TurnRobot(pigeon, swerve, -45));
   }
 
-  public void configureMechanismBindings(){
+  private void configureMechanismBindings(){
 
      //posições do elevador CORAL
      NamedCommands.registerCommand("L4", new ElevatorCommand(elevatorSubsytem, Elevator.L4_POSITION));
@@ -170,6 +171,8 @@ public class RobotContainer {
       return driveController.getLeftX() * inverter * marcha;
       case 3:
       return driveController.getRightX() * marcha;  
+      case 4:
+      return driveController.getRightY() * marcha;
     }
     
     return choose;

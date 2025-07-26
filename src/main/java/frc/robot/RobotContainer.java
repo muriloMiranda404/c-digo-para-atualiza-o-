@@ -56,6 +56,7 @@ public class RobotContainer {
 
   private void configureDriveBindings() {   
     
+    //quando iniciar, o robo vira para 0 graus;
     driveController.start().onTrue(new TurnRobot(pigeon, swerve, 0.0));
 
     //limelight

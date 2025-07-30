@@ -14,6 +14,8 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -32,6 +34,9 @@ import swervelib.parser.SwerveParser;
  * Classe de subsistema onde fazemos a ponte do nosso código para YAGSL
  */
 public class SwerveSubsystem extends SubsystemBase {
+
+    ReentrantReadWriteLock odometryLock = new ReentrantReadWriteLock();
+    Pose2d currentRobotPose = new Pose2d();
 
     // Objeto global da SwerveDrive (Classe YAGSL)
     public SwerveDrive swerveDrive;
@@ -239,4 +244,15 @@ public class SwerveSubsystem extends SubsystemBase {
     // Create a path following command using AutoBuilder. This will also trigger event markers.
     return new PathPlannerAuto(pathName);
   }
+
+  public Pose2d getSavedPose(){
+    Pose2d pose;
+    odometryLock.readLock().lock();
+    try{
+        pose = currentRobotPose;
+    }finally{
+        odometryLock.readLock().unlock();
+    }
+    return pose;
+}
 }

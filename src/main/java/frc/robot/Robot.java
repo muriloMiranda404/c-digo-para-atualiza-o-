@@ -1,13 +1,11 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.AlingToTarget;
-import frc.robot.commands.ResetPigeon;
+import frc.robot.constants.Port;
 import frc.robot.constants.Constants.Elevator;
 import frc.robot.constants.Constants.Intake;
 import frc.robot.subsystems.ElevatorSubsytem;
@@ -33,9 +31,10 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
   }
 
+  Encoder en = new Encoder(Port.NADA.id, Port.TESTE.id);
   @Override
   public void robotInit() {
-    
+
     intake.configureIntake();
 
     elevador.configureElevator();

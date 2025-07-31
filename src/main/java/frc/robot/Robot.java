@@ -1,9 +1,6 @@
 package frc.robot;
 
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -26,10 +23,10 @@ public class Robot extends TimedRobot {
   //swerve
   SwerveSubsystem swerve = RobotContainer.getSwerveInstance();
   
-  private final RobotContainer m_robotContainer;
+  private final RobotContainer robotContainer;
     
   public Robot() {
-    m_robotContainer = new RobotContainer();
+    robotContainer = new RobotContainer();
   }
 
   @Override
@@ -55,7 +52,7 @@ public class Robot extends TimedRobot {
   
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = robotContainer.getAutonomousCommand();
     
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -80,7 +77,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    if(m_robotContainer.intakeController.getRawButton(1)){
+    if(RobotContainer.getContainerIntakeController().getRawButton(1)){
       trava = true;
     }
   }

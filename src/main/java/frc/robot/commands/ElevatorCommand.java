@@ -14,6 +14,9 @@ public class ElevatorCommand extends Command{
     DigitalInput downSwitch = elevatorSubsytem.getDownSwicth();
 
     public ElevatorCommand(ElevatorSubsytem subsytem, double setpoint){
+        if(subsytem == null){
+            throw new IllegalArgumentException("o subsystema não pode ser nulo");
+        }
         this.elevatorSubsytem = subsytem;
         this.setpoint = setpoint;
         addRequirements(subsytem);

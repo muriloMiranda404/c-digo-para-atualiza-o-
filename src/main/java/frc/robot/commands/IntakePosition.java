@@ -9,6 +9,9 @@ public class IntakePosition extends Command{
     IntakeSubsystem intake;
 
     public IntakePosition(IntakeSubsystem intake, double setpoint){
+        if(intake == null){
+            throw new IllegalArgumentException("o subsystema não pode ser nulo");
+        }
         this.setpoint = setpoint;
         this.intake = intake;
         addRequirements(intake);

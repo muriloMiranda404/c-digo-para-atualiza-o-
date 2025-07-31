@@ -5,7 +5,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.LimelightConfig;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -44,7 +43,6 @@ public class AlingToTarget extends Command {
     private static double ultimaTx = 0.0;
     private static double ultimoTempoMudanca = 0.0;
     private static boolean ultimoEstadoTarget = false;
-
     
     private final Timer timer = new Timer();
     private boolean automaticSetpoint;
@@ -82,6 +80,7 @@ public class AlingToTarget extends Command {
             
             setpointX = x - 0.6;// 0.6 metros da tag
             setpointY = 0.0;
+
         }
 
         

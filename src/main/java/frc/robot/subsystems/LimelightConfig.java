@@ -8,20 +8,11 @@ import frc.robot.constants.Constants.IDs;
 public class LimelightConfig extends SubsystemBase{
     
     private final NetworkTable Limelight;
-    private static LimelightConfig limelightConfig;
-
-    public static LimelightConfig getInstance(){
-        if(limelightConfig == null){
-            return new LimelightConfig();
-        }
-        return limelightConfig;
-    }
     
     public LimelightConfig(){
         Limelight = NetworkTableInstance.getDefault().getTable(IDs.LIMELIGHT);
     }
 
-    
     public boolean getHasTarget(){
         return Limelight.getEntry("tv").getDouble(0)==1;
     }

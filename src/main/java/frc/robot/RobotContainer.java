@@ -27,48 +27,73 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 public class RobotContainer {
 
   private static final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-  private static final LimelightConfig limelight = LimelightConfig.getInstance();
+  private static final LimelightConfig limelight = new LimelightConfig();
 
   public static final Controller driveController = new Controller(Joystick.DRIVE_CONTROLLER);
-  public final XboxController intakeController = new XboxController(Joystick.INTAKE_CONTROL_ID);
+  public static final XboxController intakeController = new XboxController(Joystick.INTAKE_CONTROL_ID);
   
   public static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final SwerveModulesSubsystem swerveModules = new SwerveModulesSubsystem();
   
   private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
+
+  private static boolean teleop1 = true;
   
   public RobotContainer() {
+    if(teleop1 == true){
+
     swerve.setDefaultCommand(swerve.driveCommand(
-      () -> MathUtil.applyDeadband(setChoose(1), Joystick.DEADBAND),
-      () -> MathUtil.applyDeadband(setChoose(2), Joystick.DEADBAND),
-      () -> MathUtil.applyDeadband(setChoose(3), Joystick.DEADBAND)));
+
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(1, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(2, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true), Joystick.DEADBAND)));
 
     configureDriveBindings();
     configureMechanismBindings();
 
+} else if(teleop1 == false){
+
+  swerve.setDefaultCommand(swerve.driveCommand(
+
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(1, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(2, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(4, true), Joystick.DEADBAND)));
+
+    configureDriveBindings();
+    configureMechanismBindings();
+}
   }
 
   private void configureDriveBindings() {   
+
+    NamedCommands.registerCommand("ALINHAMENTO", new AlingToTarget(limelight, swerve, true));
+    NamedCommands.registerCommand("TURN TO 0", new TurnRobot(pigeon, swerve, 0.0));
+    NamedCommands.registerCommand("RESET PIGEON", new ResetPigeon(pigeon, swerve)); 
+    NamedCommands.registerCommand("TURN TO 45", new TurnRobot(pigeon, swerve, 45.0));
+    NamedCommands.registerCommand("TURN TO -45", new TurnRobot(pigeon, swerve, -45.0));
     
     //quando iniciar, o robo vira para 0 graus;
-    driveController.start().onTrue(new TurnRobot(pigeon, swerve, 0.0));
+    driveController.start().onTrue(NamedCommands.getCommand("TURN TO 0"));
 
     //limelight
-    new POVButton(driveController.getHID(), 270).whileTrue(new AlingToTarget(limelight, swerve, true));
+    new POVButton(driveController.getHID(), 270).whileTrue(NamedCommands.getCommand("ALINHAMENTO"));
 
     //reset pigeon
-    new JoystickButton(driveController.getHID(), 10).onTrue(new ResetPigeon(pigeon, swerve));
+    new JoystickButton(driveController.getHID(), 10).onTrue(NamedCommands.getCommand("RESET PIGEON"));
 
     //turn robot
-    new JoystickButton(driveController.getHID(), 1).onTrue(new TurnRobot(pigeon, swerve, 45));
-    new JoystickButton(driveController.getHID(), 2).onTrue(new TurnRobot(pigeon, swerve, -45));
+    new JoystickButton(driveController.getHID(), 1).onTrue(NamedCommands.getCommand("TURN TO 45"));
+    new JoystickButton(driveController.getHID(), 2).onTrue(NamedCommands.getCommand("TURN TO -45"));
   }
 
   private void configureMechanismBindings(){
@@ -207,5 +232,26 @@ public static SwerveSubsystem getSwerveInstance(){
     return new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
   }
   return swerve;
+}
+
+public static LimelightConfig getLimelightInstance(){
+  if(limelight == null){
+    return new LimelightConfig();
+  }
+  return limelight;
+}
+
+public static XboxController getContainerIntakeController(){
+  if(intakeController == null){
+    return new CommandXboxController(Joystick.INTAKE_CONTROL_ID).getHID();
+  }
+  return intakeController;
+}
+
+public static XboxController getContainerDriverController(){
+  if(driveController == null){
+    return new CommandXboxController(Joystick.DRIVE_CONTROLLER).getHID();
+  }
+  return driveController.getHID();
 }
 }

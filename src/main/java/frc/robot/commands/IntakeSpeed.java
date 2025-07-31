@@ -9,6 +9,9 @@ public class IntakeSpeed extends Command{
     double speed;
 
     public IntakeSpeed(IntakeSubsystem subsystem, double speed){
+        if(subsystem == null){
+            throw new IllegalArgumentException("o subsystema não pode ser nulo");
+        }
         this.subsystem = subsystem;
         this.speed = speed;
         addRequirements(subsystem);

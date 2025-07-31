@@ -6,7 +6,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.Constants.Controller;
+import frc.robot.constants.Constants.Joystick;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class TurnRobot extends Command{
@@ -16,7 +16,7 @@ public class TurnRobot extends Command{
    private SwerveSubsystem subsystem;
    private double angulacao;
    private PIDController controller;
-   private XboxController joystick = new XboxController(Controller.DRIVE_CONTROLLER);
+   private XboxController joystick = new XboxController(Joystick.DRIVE_CONTROLLER);
 
    public TurnRobot(Pigeon2 pigeon, SwerveSubsystem subsystem, double angulacao){
     this.pigeon = pigeon;

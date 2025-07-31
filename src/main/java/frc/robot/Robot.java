@@ -1,11 +1,12 @@
 package frc.robot;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.constants.Port;
 import frc.robot.constants.Constants.Elevator;
 import frc.robot.constants.Constants.Intake;
 import frc.robot.subsystems.ElevatorSubsytem;
@@ -31,10 +32,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
   }
 
-  Encoder en = new Encoder(Port.NADA.id, Port.TESTE.id);
   @Override
   public void robotInit() {
-
     intake.configureIntake();
 
     elevador.configureElevator();

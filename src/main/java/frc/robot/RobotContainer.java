@@ -7,7 +7,8 @@ import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.ResetPigeon;
 import frc.robot.commands.TurnRobot;
 import frc.robot.constants.Constants.Autonomous;
-import frc.robot.constants.Constants.Controller;
+import frc.robot.constants.Constants.Joystick;
+import frc.robot.constants.utils.Controller;
 import frc.robot.constants.Constants.Elevator;
 import frc.robot.constants.Constants.IDs;
 import frc.robot.constants.Constants.Intake;
@@ -21,14 +22,11 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -37,8 +35,8 @@ public class RobotContainer {
   private static final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
   private static final LimelightConfig limelight = LimelightConfig.getInstance();
 
-  public final CommandXboxController driveController = new CommandXboxController(Controller.DRIVE_CONTROLLER);
-  public final XboxController intakeController = new XboxController(Controller.INTAKE_CONTROL_ID);
+  public static final Controller driveController = new Controller(Joystick.DRIVE_CONTROLLER);
+  public final XboxController intakeController = new XboxController(Joystick.INTAKE_CONTROL_ID);
   
   public static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -48,14 +46,13 @@ public class RobotContainer {
   
   public RobotContainer() {
     swerve.setDefaultCommand(swerve.driveCommand(
-      () -> MathUtil.applyDeadband(setChoose(1), Controller.DEADBAND),
-      () -> MathUtil.applyDeadband(setChoose(2), Controller.DEADBAND),
-      () -> MathUtil.applyDeadband(setChoose(3), Controller.DEADBAND)));
+      () -> MathUtil.applyDeadband(setChoose(1), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(setChoose(2), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(setChoose(3), Joystick.DEADBAND)));
 
     configureDriveBindings();
     configureMechanismBindings();
 
-    Pose2d pose = new Pose2d();
   }
 
   private void configureDriveBindings() {   

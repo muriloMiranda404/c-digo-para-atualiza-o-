@@ -5,7 +5,7 @@ import edu.wpi.first.math.controller.PIDController;
 
 public final class Constants {
 
-  public static final class Controller{
+  public static final class Joystick{
     //joystick constants 
     public static final int DRIVE_CONTROLLER = 0;
     public static final int INTAKE_CONTROL_ID = 1;

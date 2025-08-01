@@ -2,6 +2,7 @@ package frc.robot.shuffleboard;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.constants.Constants.IDs;
@@ -19,6 +20,8 @@ public class ShuffleboardConfig{
         shuffleboard.add(teleopChooser);
         shuffleboard.addCamera("LimelightVision", "limelight", "10.94.85.2");
         shuffleboard.addNumber("Pigeon Valor", () -> pigeon.getYaw().getValueAsDouble());
+
+        DataLogManager.start();
     }
 
     public static String setChoosed(){

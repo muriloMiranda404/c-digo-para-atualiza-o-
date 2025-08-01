@@ -46,36 +46,38 @@ public class RobotContainer {
   
   private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
 
-  private static String teleop1 = ShuffleboardConfig.setChoosed();
+  private static String teleop = ShuffleboardConfig.setChoosed();
   
   public RobotContainer() {
-    if(teleop1 == "Normal_teleop"){
+    if(teleop == "Normal_teleop"){
 
     swerve.setDefaultCommand(swerve.driveCommand(
-
+      
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(1, true), Joystick.DEADBAND),
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(2, true), Joystick.DEADBAND),
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true), Joystick.DEADBAND)));
-
+      
+      System.out.println("o teleop escolhido foi o principal");
     configureDriveBindings();
     configureMechanismBindings();
 
-} else if(teleop1 == "Second_teleop"){
+} else if(teleop == "Second_teleop"){
 
   swerve.setDefaultCommand(swerve.driveCommand(
 
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(1, true), Joystick.DEADBAND),
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(2, true), Joystick.DEADBAND),
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true), Joystick.DEADBAND),
-      () -> MathUtil.applyDeadband(driveController.invertedAlliance(4, true), Joystick.DEADBAND)));
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(4, false), Joystick.DEADBAND)));
 
-    configureDriveBindings();
-    configureMechanismBindings();
-}
+      System.out.println("o teleop escolhido foi o secundario");
+      configureDriveBindings();
+      configureMechanismBindings();
+    }
   }
-
+  
   private void configureDriveBindings() {   
-
+    
     NamedCommands.registerCommand("ALINHAMENTO", new AlingToTarget(limelight, swerve, true));
     NamedCommands.registerCommand("TURN TO 0", new TurnRobot(pigeon, swerve, 0.0));
     NamedCommands.registerCommand("RESET PIGEON", new ResetPigeon(pigeon, swerve)); 

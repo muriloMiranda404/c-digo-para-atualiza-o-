@@ -169,8 +169,10 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     //metodo criado para a tentativa de melhorar o andamento do swerve 
-    public void resetPose(Pose2d pose){
+    public Command resetPose(Pose2d pose){
+      return runOnce( () ->{
       swerveDrive.swerveDrivePoseEstimator.resetPosition(getHeading(), module, pose);
+       });
     }
 
     // Função drive que chamamos em nossa classe de comando Teleoperado

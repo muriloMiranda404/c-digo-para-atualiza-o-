@@ -22,6 +22,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.Constants.IDs;
 import frc.robot.constants.Constants.Swerve;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -41,10 +42,11 @@ public class SwerveSubsystem extends SubsystemBase {
     // Objeto global da SwerveDrive (Classe YAGSL)
     public SwerveDrive swerveDrive;
     boolean orientation = true;
-    Pigeon2 pigeon = new Pigeon2(9);
+    Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
     
     // Método construtor da classe
     SwerveModulePosition[] module;
+
     public SwerveSubsystem(File directory) {
         // Seta a telemetria como nível mais alto
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;

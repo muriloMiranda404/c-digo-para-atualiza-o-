@@ -9,6 +9,7 @@ import frc.robot.commands.TurnRobot;
 import frc.robot.constants.Constants.Autonomous;
 import frc.robot.constants.Constants.Joystick;
 import frc.robot.constants.utils.Controller;
+import frc.robot.shuffleboard.ShuffleboardConfig;
 import frc.robot.constants.Constants.Elevator;
 import frc.robot.constants.Constants.IDs;
 import frc.robot.constants.Constants.Intake;
@@ -27,7 +28,6 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -46,10 +46,10 @@ public class RobotContainer {
   
   private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
 
-  private static boolean teleop1 = true;
+  private static String teleop1 = ShuffleboardConfig.setChoosed();
   
   public RobotContainer() {
-    if(teleop1 == true){
+    if(teleop1 == "Normal_teleop"){
 
     swerve.setDefaultCommand(swerve.driveCommand(
 
@@ -60,7 +60,7 @@ public class RobotContainer {
     configureDriveBindings();
     configureMechanismBindings();
 
-} else if(teleop1 == false){
+} else if(teleop1 == "Second_teleop"){
 
   swerve.setDefaultCommand(swerve.driveCommand(
 
@@ -114,8 +114,8 @@ public class RobotContainer {
      NamedCommands.registerCommand("POSIÇÃO ABERTURA", new IntakePosition(intakeSubsystem, Intake.ABERTURA_COMUM));
      NamedCommands.registerCommand("CORAL L4", new IntakePosition(intakeSubsystem, Intake.CORAL_L4));
      NamedCommands.registerCommand("POSIÇÃO MINIMA L1", new IntakePosition(intakeSubsystem, Intake.MIN_INTAKE));
-     NamedCommands.registerCommand("GIRAR CORAL", new IntakeSpeed(intakeSubsystem, 0.8));
-     NamedCommands.registerCommand("GIRAR CORAL INVERTIDO", new IntakeSpeed(intakeSubsystem, -0.8));
+     NamedCommands.registerCommand("GIRAR CORAL", new IntakeSpeed(intakeSubsystem, 0.3));
+     NamedCommands.registerCommand("GIRAR CORAL INVERTIDO", new IntakeSpeed(intakeSubsystem, -0.3));
      
    ///////////////////////////////////////////// COMANDOS TELEOPERADOS////////////////////////////////////////////////////////////
  
@@ -141,10 +141,9 @@ public class RobotContainer {
      .andThen(NamedCommands.getCommand("CORAL L4"))
      );
 
-         //empurrar e puxar o coral
+    //empurrar e puxar o coral
     new JoystickButton(intakeController, 5).whileTrue(NamedCommands.getCommand("GIRAR CORAL"));
     new JoystickButton(intakeController, 6).whileTrue(NamedCommands.getCommand("GIRAR CORAL INVERTIDO"));
-
 
       //////////////////////////////////////INICIO DOS COMANDOS AUTOMATICOS////////////////////////////////////////////////////////
 

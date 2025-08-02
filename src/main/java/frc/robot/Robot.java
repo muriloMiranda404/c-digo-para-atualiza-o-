@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.constants.Constants.Elevator;
 import frc.robot.constants.Constants.Intake;
+import frc.robot.shuffleboardSettings.ShuffleboardConfig;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -15,18 +16,29 @@ public class Robot extends TimedRobot {
   public static boolean trava = false;
 
   //elevador 
-  ElevatorSubsytem elevador = RobotContainer.getElevatorInstance();
+  private final ElevatorSubsytem elevador;
 
   //intake
-  IntakeSubsystem intake = RobotContainer.getIntakeInstance();
+  private final IntakeSubsystem intake;
 
   //swerve
-  SwerveSubsystem swerve = RobotContainer.getSwerveInstance();
+  private final SwerveSubsystem swerve;
   
+  private final ShuffleboardConfig shuffleboardConfig;
+
   private final RobotContainer robotContainer;
     
+
   public Robot() {
     robotContainer = new RobotContainer();
+
+    shuffleboardConfig = RobotContainer.getShuffleboardInstance();
+
+    swerve = RobotContainer.getSwerveInstance();
+
+    intake = RobotContainer.getIntakeInstance();
+
+    elevador = RobotContainer.getElevatorInstance();
   }
 
   @Override
@@ -42,6 +54,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+
+    shuffleboardConfig.getMode();
+    shuffleboardConfig.getAlliance();
+    shuffleboardConfig.getMathTime();
   }
   
   @Override

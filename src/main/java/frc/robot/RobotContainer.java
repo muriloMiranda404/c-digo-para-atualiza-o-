@@ -9,7 +9,7 @@ import frc.robot.commands.TurnRobot;
 import frc.robot.constants.Constants.Autonomous;
 import frc.robot.constants.Constants.Joystick;
 import frc.robot.constants.utils.Controller;
-import frc.robot.shuffleboard.ShuffleboardConfig;
+import frc.robot.shuffleboardSettings.ShuffleboardConfig;
 import frc.robot.constants.Constants.Elevator;
 import frc.robot.constants.Constants.IDs;
 import frc.robot.constants.Constants.Intake;
@@ -23,10 +23,8 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -43,10 +41,12 @@ public class RobotContainer {
   public static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final SwerveModulesSubsystem swerveModules = new SwerveModulesSubsystem();
+
+  private static final ShuffleboardConfig shuffleboardConfig = new ShuffleboardConfig();
   
   private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
 
-  private static String teleop = ShuffleboardConfig.setChoosed();
+  private static String teleop = shuffleboardConfig.setChoosed();
   
   public RobotContainer() {
     if(teleop == "Normal_teleop"){
@@ -83,7 +83,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("RESET PIGEON", new ResetPigeon(pigeon, swerve)); 
     NamedCommands.registerCommand("TURN TO 45", new TurnRobot(pigeon, swerve, 45.0));
     NamedCommands.registerCommand("TURN TO -45", new TurnRobot(pigeon, swerve, -45.0));
-    
+
     //quando iniciar, o robo vira para 0 graus;
     driveController.start().onTrue(NamedCommands.getCommand("TURN TO 0"));
 
@@ -183,30 +183,6 @@ public class RobotContainer {
     return new PathPlannerAuto(Autonomous.AUTO);
   }
 
-  //marcha
-  public double setChoose(int choose){
-
-    int inverter = DriverStation.getAlliance().get() == Alliance.Red ? -1 : 1;
-    double marcha = 0.5;
-    
-    if(driveController.getHID().getRightBumperButton()) marcha = 1.0;
-    if(driveController.getHID().getLeftBumperButton()) marcha = 0.2;
-    else marcha = 0.5;
- 
-    switch (choose) {
-      case 1:
-        return driveController.getLeftY() * inverter * marcha;
-      case 2:
-      return driveController.getLeftX() * inverter * marcha;
-      case 3:
-      return driveController.getRightX() * marcha;  
-      case 4:
-      return driveController.getRightY() * marcha;
-    }
-    
-    return choose;
-  }
-
   public static ElevatorSubsytem getElevatorInstance(){
     if(elevatorSubsytem == null){
         return new ElevatorSubsytem();
@@ -254,5 +230,12 @@ public static XboxController getContainerDriverController(){
     return new CommandXboxController(Joystick.DRIVE_CONTROLLER).getHID();
   }
   return driveController.getHID();
+}
+
+public static ShuffleboardConfig getShuffleboardInstance(){
+  if(shuffleboardConfig == null){
+    return new ShuffleboardConfig();
+  }
+  return shuffleboardConfig;
 }
 }

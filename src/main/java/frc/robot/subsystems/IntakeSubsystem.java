@@ -26,6 +26,8 @@ public class IntakeSubsystem extends SubsystemBase{
     public SparkMaxConfig coralConfig;
     public SparkMaxConfig globalCofig;
 
+    public double setpoint;
+
     public IntakeSubsystem(){
 
        intake = new SparkMax(Intake.INTAKE_MOTOR, SparkMax.MotorType.kBrushless);
@@ -71,6 +73,7 @@ public class IntakeSubsystem extends SubsystemBase{
     
     public void setPosition(double setpoint){
 
+        this.setpoint = setpoint;
         double angulo = getDistance();
         double output = controller.calculate(angulo, setpoint);
 
@@ -108,6 +111,48 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public boolean atSetpoint(){
         return controller.atSetpoint();
+    }
+
+    public String getPosition(){
+        String position;
+
+        switch ((int) setpoint) {
+            case (int)Intake.ABERTURA_L1:
+                
+                position = "ABERTURA DO L1";
+                break;
+        
+            case (int)Intake.ABERTURA_COMUM:
+            
+                position = "POSIÇÃO DE ABERTURA COMUM";
+                break;
+
+            case (int)Intake.ALGAE_POSITION:
+            
+                position = "POSIÇÃO DE ALGAS";
+                break;
+
+            case (int)Intake.CORAL_L4:
+            
+                position = "POSIÇÃO DO L4";
+                break;
+
+            case (int)Intake.MAX_INTAKE:
+            
+                position = "INTAKE NA POSIÇÃO MAXIMA";
+                break;
+
+            case (int)Intake.MIN_INTAKE:
+            
+                position = "INTAKE NA POSIÇÃO MINIMA";
+                break;
+
+            default:
+
+                position = "POSIÇÃO NÃO INDENTIFICADA";
+                break;
+        }
+        return position;
     }
 
     public void configureIntake(){

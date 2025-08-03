@@ -57,12 +57,16 @@ public class IntakeSubsystem extends SubsystemBase{
 
     }
 
-
     public void setSpeed(double speed){
         coral.set(speed);
     }
+
     public double getDistance(){
         return encoder.get() * 360;
+    }
+
+    public double getSpeed(){
+        return coral.get();
     }
     
     public void setPosition(double setpoint){
@@ -84,6 +88,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
        intake.set(output);
     }
+
     public void stopMotor(){
         coral.setVoltage(0);
         intake.setVoltage(0);
@@ -112,11 +117,7 @@ public class IntakeSubsystem extends SubsystemBase{
     @Override
     public void periodic(){
         SmartDashboard.putNumber("angulo", getDistance());
+        SmartDashboard.putNumber("speed", getSpeed());
         SmartDashboard.putBoolean("fim de curso", algae_swicth.get());
     }
 }
-
-/*tem ideia:
- * se nãi der certo, tentar colocar no comando para mudança de posição.
- * Por exemplo, colocar o maximo e o minimo do intake no comnado, fim de curso e stc...
- */

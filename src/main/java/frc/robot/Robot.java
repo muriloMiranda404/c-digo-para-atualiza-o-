@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
     
     intake.setPosition(Intake.ABERTURA_COMUM);
     
-    elevador.setSetpoint(Elevator.L1_POSITION);
+    elevador.setSetpoint(shuffleboardConfig.setStartPosition());
   }
 
   @Override

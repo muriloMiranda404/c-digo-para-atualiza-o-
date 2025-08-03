@@ -8,16 +8,19 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.constants.DriveConstants.Elevator;
 import frc.robot.constants.DriveConstants.IDs;
 
 public class ShuffleboardConfig{
     
     private static SendableChooser<String> teleopChooser;
+    private static SendableChooser<Double> startPositionChooser;
     private static Pigeon2 pigeon;
 
     public ShuffleboardConfig(){
 
         teleopChooser = new SendableChooser<>();
+        startPositionChooser = new SendableChooser<>();
 
         pigeon = new Pigeon2(IDs.PIGEON2);
 
@@ -63,5 +66,20 @@ public class ShuffleboardConfig{
         double time = DriverStation.getMatchTime();
 
         return time;
+    }
+
+    public double setStartPosition(){
+        
+        //niveis de corais 
+        startPositionChooser.setDefaultOption("L1", Elevator.L1_POSITION);
+        startPositionChooser.addOption("L2", Elevator.L2_POSITION);
+        startPositionChooser.addOption("L3", Elevator.L3_POSITION);
+        startPositionChooser.addOption("L3", Elevator.L4_POSITION);
+
+        //niveis de alga
+        startPositionChooser.addOption("ALGAE L2", Elevator.L2_ALGAE);
+        startPositionChooser.addOption("ALGAE L3", Elevator.L3_ALGAE);
+
+        return startPositionChooser.getSelected();
     }
 }

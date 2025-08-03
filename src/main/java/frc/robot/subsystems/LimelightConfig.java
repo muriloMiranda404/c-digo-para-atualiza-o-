@@ -9,8 +9,8 @@ public class LimelightConfig extends SubsystemBase{
     
     private final NetworkTable Limelight;
     
-    public LimelightConfig(){
-        Limelight = NetworkTableInstance.getDefault().getTable(IDs.LIMELIGHT);
+    public LimelightConfig(String table){
+        Limelight = NetworkTableInstance.getDefault().getTable(table);
     }
 
     public boolean getHasTarget(){

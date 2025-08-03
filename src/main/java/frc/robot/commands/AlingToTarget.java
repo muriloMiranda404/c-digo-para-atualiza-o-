@@ -83,7 +83,6 @@ public class AlingToTarget extends Command {
 
         }
 
-        
         try {
             rotationController.reset();
             xController.reset();

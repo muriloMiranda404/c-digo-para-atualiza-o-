@@ -33,14 +33,14 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 public class RobotContainer {
 
   private static final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-  private static final LimelightConfig limelight = new LimelightConfig();
+  private static final LimelightConfig limelight = new LimelightConfig(IDs.LIMELIGHT);
 
-  public static final Controller driveController = new Controller(Joystick.DRIVE_CONTROLLER);
-  public static final XboxController intakeController = new XboxController(Joystick.INTAKE_CONTROL_ID);
+  private static final Controller driveController = new Controller(Joystick.DRIVE_CONTROLLER);
+  private static final XboxController intakeController = new XboxController(Joystick.INTAKE_CONTROL_ID);
   
-  public static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
-  public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  public static final SwerveModulesSubsystem swerveModules = new SwerveModulesSubsystem();
+  private static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
+  private static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private static final SwerveModulesSubsystem swerveModules = new SwerveModulesSubsystem();
 
   private static final ShuffleboardConfig shuffleboardConfig = new ShuffleboardConfig();
   
@@ -213,7 +213,7 @@ public static SwerveSubsystem getSwerveInstance(){
 
 public static LimelightConfig getLimelightInstance(){
   if(limelight == null){
-    return new LimelightConfig();
+    return new LimelightConfig(IDs.LIMELIGHT);
   }
   return limelight;
 }

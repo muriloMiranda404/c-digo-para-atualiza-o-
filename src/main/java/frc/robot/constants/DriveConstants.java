@@ -3,7 +3,7 @@ package frc.robot.constants;
 
 import edu.wpi.first.math.controller.PIDController;
 
-public final class Constants {
+public final class DriveConstants {
 
   public static final class Joystick{
     //joystick constants 
@@ -11,15 +11,6 @@ public final class Constants {
     public static final int INTAKE_CONTROL_ID = 1;
     
     public static final double DEADBAND = 0.1;
-  }
-
-  public static final class Swerve{
-    //velocidade maxima
-    public static final double MAX_SPEED = 7.0;
-
-    //PIDs dos modulos 
-    public static final PIDController drivePID = new PIDController(0.01, 0, 0);
-    public static final PIDController anglePID = new PIDController(0.01, 0, 0);
   }
   
   public static final class Elevator{

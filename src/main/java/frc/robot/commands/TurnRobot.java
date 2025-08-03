@@ -7,7 +7,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.Constants.Joystick;
+import frc.robot.constants.DriveConstants.Joystick;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class TurnRobot extends Command{

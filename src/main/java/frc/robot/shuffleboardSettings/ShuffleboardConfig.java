@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.constants.Constants.IDs;
+import frc.robot.constants.DriveConstants.IDs;
 
 public class ShuffleboardConfig{
     

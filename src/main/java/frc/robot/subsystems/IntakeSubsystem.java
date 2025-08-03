@@ -163,6 +163,7 @@ public class IntakeSubsystem extends SubsystemBase{
     public void periodic(){
         SmartDashboard.putNumber("angulo", getDistance());
         SmartDashboard.putNumber("speed", getSpeed());
+        SmartDashboard.putString("posição", getPosition());
         SmartDashboard.putBoolean("fim de curso", algae_swicth.get());
     }
 }

@@ -4,7 +4,6 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.constants.DriveConstants.Elevator;
 import frc.robot.constants.DriveConstants.Intake;
 import frc.robot.shuffleboardSettings.ShuffleboardConfig;
 import frc.robot.subsystems.ElevatorSubsytem;
@@ -92,6 +91,7 @@ public class Robot extends TimedRobot {
     intake.setPosition(Intake.ABERTURA_COMUM);
     
     elevador.setSetpoint(shuffleboardConfig.setStartPosition());
+
   }
 
   @Override

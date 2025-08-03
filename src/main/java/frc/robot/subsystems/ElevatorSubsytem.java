@@ -26,6 +26,8 @@ public class ElevatorSubsytem extends SubsystemBase{
     public static DigitalInput downSwitch;
 
     public static Encoder encoder;
+
+    public double setpoint;
         
     public ElevatorSubsytem(){
             
@@ -55,7 +57,6 @@ public class ElevatorSubsytem extends SubsystemBase{
         encoder = new Encoder(Elevator.ENCODER_A, Elevator.ENCODER_B);
         }
         
-
         public void setSpeed(double speed){
             leftMotor.set(speed);
             rightMotor.set(speed);
@@ -70,22 +71,25 @@ public class ElevatorSubsytem extends SubsystemBase{
             return encoder.getDistance();
         }
         
-        public void setSetpoint(double Setpoint){
+        public void setSetpoint(double setpoint){
+
+        this.setpoint = setpoint;
 
         double ang = getDistance();
-        double output = controller.calculate(ang, Setpoint);
+        double output = controller.calculate(ang, setpoint);
 
         if(upSwitch.get()){
-            if (Setpoint > 1480.0) Setpoint = 1480.0;
+            if (setpoint > 1480.0) setpoint = 1480.0;
             if (output > 0) output = 0.0;
         }
         if(downSwitch.get()){
-            if (Setpoint < 0.0) Setpoint = 0.0;
+            if (setpoint < 0.0) setpoint = 0.0;
             if (output < 0) output = 0.0;
         }
 
             leftMotor.set(output);
             rightMotor.set(output);
+
            }
            
        public double getSpeed(){
@@ -104,11 +108,55 @@ public class ElevatorSubsytem extends SubsystemBase{
         public boolean atSetpoint(){
             return controller.atSetpoint();
         }
+
+        public String getPosition(){
+            String position;
+
+            switch ((int) setpoint) {
+
+                case (int)Elevator.L1_POSITION:
+
+                    position = "POSIÇÃO DE L1";
+                    break;
+                
+                case (int)Elevator.L2_POSITION:
+
+                    position = "POSIÇÃO DO L2";
+                    break;
+                 
+                case (int)Elevator.L3_POSITION:
+                
+                    position = "POSIÇÃO DO L3";
+                    break;
+
+                case (int)Elevator.L4_POSITION:
+                    
+                    position = "POSIÇÃO DO L4";
+                    break;
+
+                case (int)Elevator.L2_ALGAE:
+                
+                    position = "ALGA DO L2";
+                    break;
+
+                case (int)Elevator.L3_ALGAE:
+                
+                    position = "ALGA DO L3";
+                    break;
+
+                default:
+                    position = "POSIÇÃO NÃO IDENTIFICADA";
+                    break;
+            }
+
+            return position;
+        }
          
         @Override
         public void periodic(){
         SmartDashboard.putNumber("speed", getSpeed());
         SmartDashboard.putNumber("angulo", getDistance());
+        SmartDashboard.putString("posição", getPosition());
         SmartDashboard.putBoolean("fim de curso alto", upSwitch.get());
         SmartDashboard.putBoolean("fim de curso baixo", downSwitch.get());
  }

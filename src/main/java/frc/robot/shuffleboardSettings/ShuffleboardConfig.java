@@ -29,6 +29,7 @@ public class ShuffleboardConfig{
         shuffleboard.add(teleopChooser);
         shuffleboard.addCamera("LimelightVision", "limelight", "10.94.85.2");
         shuffleboard.addNumber("Pigeon Valor", () -> pigeon.getYaw().getValueAsDouble());
+        shuffleboard.addNumber("tempo de partida", () -> getMathTime());
 
         shuffleboard.add(CameraServer.startAutomaticCapture());
 
@@ -58,10 +59,9 @@ public class ShuffleboardConfig{
         SmartDashboard.putBoolean("alliance", alliance);
     }
 
-    public void getMathTime(){
+    public double getMathTime(){
         double time = DriverStation.getMatchTime();
 
-        SmartDashboard.putNumber("tempo", time);
-
+        return time;
     }
 }

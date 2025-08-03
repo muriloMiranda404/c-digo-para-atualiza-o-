@@ -10,8 +10,6 @@ public class ElevatorCommand extends Command{
     ElevatorSubsytem elevatorSubsytem;
     PIDController controller;
     double setpoint;
-    DigitalInput upSwitch = elevatorSubsytem.getUpSwicth();
-    DigitalInput downSwitch = elevatorSubsytem.getDownSwicth();
 
     public ElevatorCommand(ElevatorSubsytem subsytem, double setpoint){
         if(subsytem == null){
@@ -28,19 +26,7 @@ public class ElevatorCommand extends Command{
     }
     @Override
     public void execute(){
-        double ang = elevatorSubsytem.getDistance();
-        double output = elevatorSubsytem.calculateOutput(ang, setpoint);
-
-        if(upSwitch.get()){
-            if (setpoint > 1480.0) setpoint = 1480.0;
-            if (output > 0) output = 0.0;
-        }
-        if(downSwitch.get()){
-            if (setpoint < 0.0) setpoint = 0.0;
-            if (output < 0) output = 0.0;
-        }
-
-        elevatorSubsytem.setOutput(output);
+        elevatorSubsytem.setSetpoint(setpoint);
     }
     @Override
     public void end(boolean interrupted){

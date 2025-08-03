@@ -7,15 +7,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModules;
 
 public class SwerveModulesSubsystem extends SubsystemBase{
-
-    private static SwerveModulesSubsystem modules = new SwerveModulesSubsystem();
-
-    public static SwerveModulesSubsystem getInstance(){
-        if(modules == null){
-            return new SwerveModulesSubsystem();
-        }
-        return modules;
-    }
     
     private final SwerveModules backRight;
     private final SwerveModules backLeft;

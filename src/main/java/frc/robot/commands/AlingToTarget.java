@@ -66,7 +66,7 @@ public class AlingToTarget extends Command {
         this.xController = new PIDController(kP_X, kI_X, kD_X);
         this.rotationController = new PIDController(kP_ROTATION, kI_ROTATION, kD_ROTATION);
         this.automaticSetpoint = automaticSetpoint;
-        addRequirements(subsystem);
+        addRequirements(subsystem, LimelightConfig);
     }
     
     @Override
@@ -108,23 +108,23 @@ public class AlingToTarget extends Command {
     @Override
     public void execute() {
         try {
-            boolean temTarget = LimelightConfig.getHasTarget();
+
+            boolean hasTarget = LimelightConfig.getHasTarget();
             
             // Detecta perda de alvo
-            if (temTarget != ultimoEstadoTarget) {
-                ultimoEstadoTarget = temTarget;
-                if (!temTarget) {
+            if (hasTarget != ultimoEstadoTarget) {
+                ultimoEstadoTarget = hasTarget;
+                if (!hasTarget) {
                     tentativas++;
                     System.out.println("Tag perdida! Tentativa " + tentativas + " de " + MAX_TENTATIVAS);
                 }
             }
             
-            if (temTarget) {
+            if (hasTarget) {
                 
                 double[] tag = LimelightConfig.getTagPose();
                 double x = tag[2];//frente
                 double y = tag[4];//esquerda/direita
-                
                 
                 // Proteção contra valores inválidos
                 if (Double.isNaN(x) || Double.isNaN(y)) {

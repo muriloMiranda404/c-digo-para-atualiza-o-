@@ -79,8 +79,8 @@ public class RobotContainer {
   private void configureDriveBindings() {   
     
     NamedCommands.registerCommand("ALINHAMENTO", new AlingToTarget(limelight, swerve, true));
-    NamedCommands.registerCommand("TURN TO 0", new TurnRobot(pigeon, swerve, 0.0));
     NamedCommands.registerCommand("RESET PIGEON", new ResetPigeon(pigeon, swerve)); 
+    NamedCommands.registerCommand("TURN TO 0", new TurnRobot(pigeon, swerve, 0.0));
     NamedCommands.registerCommand("TURN TO 45", new TurnRobot(pigeon, swerve, 45.0));
     NamedCommands.registerCommand("TURN TO -45", new TurnRobot(pigeon, swerve, -45.0));
 

@@ -69,14 +69,21 @@ public class ElevatorSubsytem extends SubsystemBase{
         public double getDistance(){
             return encoder.getDistance();
         }
-
-        public double calculateOutput(double medido, double setpoint){
-            double output = controller.calculate(medido, setpoint);
-
-            return output;
-        }
         
-        public void setOutput(double output){
+        public void setSetpoint(double Setpoint){
+
+        double ang = getDistance();
+        double output = controller.calculate(ang, Setpoint);
+
+        if(upSwitch.get()){
+            if (Setpoint > 1480.0) Setpoint = 1480.0;
+            if (output > 0) output = 0.0;
+        }
+        if(downSwitch.get()){
+            if (Setpoint < 0.0) Setpoint = 0.0;
+            if (output < 0) output = 0.0;
+        }
+
             leftMotor.set(output);
             rightMotor.set(output);
            }
@@ -92,22 +99,6 @@ public class ElevatorSubsytem extends SubsystemBase{
 
         public void resetEncoder(){
             encoder.reset();
-        }
-
-        public Encoder getElevatorEncoder(){
-            return encoder;
-        }
-
-        public PIDController getPID(){
-            return controller;
-        }
-
-        public DigitalInput getUpSwicth(){
-            return upSwitch;
-        }
-
-        public DigitalInput getDownSwicth(){
-            return downSwitch;
         }
 
         public boolean atSetpoint(){

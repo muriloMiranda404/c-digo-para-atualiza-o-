@@ -12,6 +12,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class Robot extends TimedRobot {
+
   private Command m_autonomousCommand;
   public static boolean trava = false;
 
@@ -30,25 +31,28 @@ public class Robot extends TimedRobot {
     
 
   public Robot() {
+
     robotContainer = new RobotContainer();
 
-    shuffleboardConfig = RobotContainer.getShuffleboardInstance();
-
     swerve = RobotContainer.getSwerveInstance();
-
-    intake = RobotContainer.getIntakeInstance();
-
+    
     elevador = RobotContainer.getElevatorInstance();
+    
+    intake = RobotContainer.getIntakeInstance();
+    
+    shuffleboardConfig = RobotContainer.getShuffleboardInstance();
   }
 
   @Override
   public void robotInit() {
+    
     intake.configureIntake();
 
     elevador.configureElevator();
 
     CameraServer.startAutomaticCapture();
     swerve.resetPigeon();
+  
   }
   
   @Override
@@ -87,7 +91,7 @@ public class Robot extends TimedRobot {
     
     intake.setPosition(Intake.ABERTURA_COMUM);
     
-    elevador.setOutput(Elevator.L1_POSITION);
+    elevador.setSetpoint(Elevator.L1_POSITION);
   }
 
   @Override
@@ -96,6 +100,7 @@ public class Robot extends TimedRobot {
     if(RobotContainer.getContainerIntakeController().getRawButton(1)){
       trava = true;
     }
+
   }
 
   @Override

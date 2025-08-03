@@ -5,7 +5,6 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -55,6 +54,7 @@ public class IntakeSubsystem extends SubsystemBase{
         encoder = new DutyCycleEncoder(Intake.INTAKE_ENCODER);
 
         algae_swicth = new DigitalInput(Intake.ALGAE_SWICTH);
+
     }
 
 

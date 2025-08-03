@@ -14,7 +14,6 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -31,9 +30,6 @@ import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
 
-/** 
- * Classe de subsistema onde fazemos a ponte do nosso código para YAGSL
- */
 public class SwerveSubsystem extends SubsystemBase {
 
     ReentrantReadWriteLock odometryLock = new ReentrantReadWriteLock();

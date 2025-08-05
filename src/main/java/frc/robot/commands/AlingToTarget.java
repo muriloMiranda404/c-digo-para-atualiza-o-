@@ -55,7 +55,8 @@ public class AlingToTarget extends Command {
         this(limelightConfig, subsystem, setpointX, setpointY, false);
     }
     
-    private AlingToTarget(LimelightConfig LimelightConfig, SwerveSubsystem subsystem, double setpointX, double setpointY, boolean automaticSetpoint) {
+    private AlingToTarget(LimelightConfig LimelightConfig, SwerveSubsystem subsystem, double setpointX, double setpointY,
+                         boolean automaticSetpoint) {
         if (LimelightConfig == null || subsystem == null) {
             throw new IllegalArgumentException("Parâmetros não podem ser nulos");
         }

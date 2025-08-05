@@ -53,9 +53,9 @@ public class RobotContainer {
 
     swerve.setDefaultCommand(swerve.driveCommand(
       
-      () -> MathUtil.applyDeadband(driveController.invertedAlliance(1, true), Joystick.DEADBAND),
-      () -> MathUtil.applyDeadband(driveController.invertedAlliance(2, true), Joystick.DEADBAND),
-      () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true), Joystick.DEADBAND)));
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(1, true, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(2, true, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true, true), Joystick.DEADBAND)));
       
       System.out.println("o teleop escolhido foi o principal");
     configureDriveBindings();
@@ -65,10 +65,10 @@ public class RobotContainer {
 
   swerve.setDefaultCommand(swerve.driveCommand(
 
-      () -> MathUtil.applyDeadband(driveController.invertedAlliance(1, true), Joystick.DEADBAND),
-      () -> MathUtil.applyDeadband(driveController.invertedAlliance(2, true), Joystick.DEADBAND),
-      () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true), Joystick.DEADBAND),
-      () -> MathUtil.applyDeadband(driveController.invertedAlliance(4, false), Joystick.DEADBAND)));
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(1, true, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(2, true, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(4, false, true), Joystick.DEADBAND)));
 
       System.out.println("o teleop escolhido foi o secundario");
       configureDriveBindings();

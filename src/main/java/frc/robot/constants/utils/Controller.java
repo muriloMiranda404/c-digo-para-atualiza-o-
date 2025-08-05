@@ -11,15 +11,15 @@ public class Controller extends CommandXboxController {
     super(Id);
    }
 
-   public double invertedAlliance(int choose, boolean OnMarcha){
+   public double invertedAlliance(int choose, boolean OnMarcha, boolean invert){
     double inverter = 1.0;
     double marcha;
 
-    if(DriverStation.getAlliance().get() == Alliance.Red){
-        inverter = -1.0;
+    if(invert == true){
+        inverter = DriverStation.getAlliance().get() == Alliance.Red ? -1.0 : 1.0;
     } else{
         inverter = 1.0;
-    } 
+    }
 
     if(OnMarcha == true){
       marcha = 0.5 + ((getRightTriggerAxis() - getLeftTriggerAxis()) * 0.5);

@@ -5,16 +5,26 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeSpeed extends Command{
 
-    IntakeSubsystem subsystem;
+    IntakeSubsystem intakeSubsystem;
     double speed;
+    boolean stop;
 
-    public IntakeSpeed(IntakeSubsystem subsystem, double speed){
-        if(subsystem == null){
+    public IntakeSpeed(IntakeSubsystem intakeSubsystem, double speed){
+        this(intakeSubsystem, speed, false);
+    }
+
+    public IntakeSpeed(IntakeSubsystem intakeSubsystem, boolean stop){
+        this(intakeSubsystem, 0.2, stop);
+    }
+
+    private IntakeSpeed(IntakeSubsystem intakeSubsystem, double speed, boolean stop){
+        if(intakeSubsystem == null){
             throw new IllegalArgumentException("o subsystema não pode ser nulo");
         }
-        this.subsystem = subsystem;
+        this.stop = stop;
+        this.intakeSubsystem = intakeSubsystem;
         this.speed = speed;
-        addRequirements(subsystem);
+        addRequirements(intakeSubsystem);
     }
 
     @Override
@@ -24,9 +34,12 @@ public class IntakeSpeed extends Command{
 
     @Override
     public void execute(){
-
+        
         try{
-            subsystem.setSpeed(speed);
+            boolean parar = false;
+
+            intakeSubsystem.setSpeed(speed);
+
         } catch(Exception e){
             System.out.println("erro detectado " + e);
         }
@@ -34,11 +47,19 @@ public class IntakeSpeed extends Command{
 
     @Override
     public boolean isFinished(){
-        return false;
+        boolean parar = false;
+        
+        if(stop == true){
+            if(intakeSubsystem.CoralDetected()) parar = true;
+        } else{
+            parar = false;
+        }
+
+        return false || parar == true;
     }
     
     @Override
     public void end(boolean interrupted){
-        subsystem.stopMotor();
+        intakeSubsystem.stopMotor();
     }
 }

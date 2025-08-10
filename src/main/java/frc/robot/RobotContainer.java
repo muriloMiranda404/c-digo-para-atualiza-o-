@@ -26,6 +26,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -116,64 +117,69 @@ public class RobotContainer {
      NamedCommands.registerCommand("POSIÇÃO ABERTURA", new IntakePosition(intakeSubsystem, Intake.ABERTURA_COMUM));
      NamedCommands.registerCommand("CORAL L4", new IntakePosition(intakeSubsystem, Intake.CORAL_L4));
      NamedCommands.registerCommand("POSIÇÃO MINIMA L1", new IntakePosition(intakeSubsystem, Intake.MIN_INTAKE));
-     NamedCommands.registerCommand("GIRAR CORAL", new IntakeSpeed(intakeSubsystem, 0.3));
-     NamedCommands.registerCommand("GIRAR CORAL INVERTIDO", new IntakeSpeed(intakeSubsystem, -0.3));
+     NamedCommands.registerCommand("GET CORAL", new IntakeSpeed(intakeSubsystem, true));
+     NamedCommands.registerCommand("THROW CORAL", new IntakeSpeed(intakeSubsystem, 0.7));
+     NamedCommands.registerCommand("INVERTED THROW CORAL", new IntakeSpeed(intakeSubsystem, -0.7));
      
    ///////////////////////////////////////////// COMANDOS TELEOPERADOS////////////////////////////////////////////////////////////
  
      //L1
-     new JoystickButton(intakeController, 1).onTrue(NamedCommands.getCommand("ABERTURA L1")
-     .andThen(NamedCommands.getCommand("L1"))
-     .andThen(NamedCommands.getCommand("POSIÇÃO MINIMA L1"))
-     );
+     new JoystickButton(intakeController, 1).onTrue(new SequentialCommandGroup(
+      NamedCommands.getCommand("ABERTURA L1"),
+      NamedCommands.getCommand("L1"),
+      NamedCommands.getCommand("POSIÇÃO MINIMA L1"),
+      NamedCommands.getCommand("GET CORAL")
+     ));
  
-     //L2
-     new JoystickButton(intakeController, 2).onTrue(NamedCommands.getCommand("POSIÇÃO ABERTURA")
-     .andThen(NamedCommands.getCommand("L2"))
-     );
+    //L2
+    new JoystickButton(intakeController, 2).onTrue(new SequentialCommandGroup(
+      NamedCommands.getCommand("POSIÇÃO MINIMA ABERTURA"),
+      NamedCommands.getCommand("L2")
+     ));
  
      //L3
-     new JoystickButton(intakeController, 3).onTrue(NamedCommands.getCommand("POSIÇÃO ABERTURA")
-     .andThen(NamedCommands.getCommand("L3"))
-     );
+     new JoystickButton(intakeController, 3).onTrue(new SequentialCommandGroup(
+      NamedCommands.getCommand("POSIÇÃO MINIMA ABERTURA"),
+      NamedCommands.getCommand("L3")
+     ));
  
      //L4
-     new JoystickButton(intakeController, 4).onTrue(NamedCommands.getCommand("POSIÇÃO ABERTURA")
-     .andThen(NamedCommands.getCommand("L4"))
-     .andThen(NamedCommands.getCommand("CORAL L4"))
-     );
+     new JoystickButton(intakeController, 4).onTrue(new SequentialCommandGroup(
+      NamedCommands.getCommand("POSIÇÃO MINIMA ABERTURA"),
+      NamedCommands.getCommand("L4"),
+      NamedCommands.getCommand("CORAL L4")
+     ));
 
     //empurrar e puxar o coral
-    new JoystickButton(intakeController, 5).whileTrue(NamedCommands.getCommand("GIRAR CORAL"));
-    new JoystickButton(intakeController, 6).whileTrue(NamedCommands.getCommand("GIRAR CORAL INVERTIDO"));
-
+    new JoystickButton(intakeController, 9).whileTrue(NamedCommands.getCommand("THROW CORAL"));
+    new JoystickButton(intakeController, 10).whileTrue(NamedCommands.getCommand("INVERYED THROW CORAL"));
       //////////////////////////////////////INICIO DOS COMANDOS AUTOMATICOS////////////////////////////////////////////////////////
 
     //L1
-    NamedCommands.registerCommand("L1 FULL COMMAND", 
-    NamedCommands.getCommand("ABERTURA L1")
-    .andThen(NamedCommands.getCommand("L1"))
-    .andThen(NamedCommands.getCommand("POSIÇÃO MINIMA L1"))
-    );
+    NamedCommands.registerCommand("L1 FULL COMMAND", new SequentialCommandGroup(
+      NamedCommands.getCommand("ABERTURA L1"),
+      NamedCommands.getCommand("L1"),
+      NamedCommands.getCommand("POSIÇÃO MINIMA L1")
+  ));
+  
   //L2
-
-  NamedCommands.registerCommand("L2 FULL COMMAND", 
-  NamedCommands.getCommand("POSIÇÃO ABERTURA")
-  .andThen(NamedCommands.getCommand("L2"))
-  );  
+  NamedCommands.registerCommand("L2 FULL COMMAND", new SequentialCommandGroup(
+    NamedCommands.getCommand("POSIÇÃO MINIMA ABERTURA"),
+    NamedCommands.getCommand("L2")
+  ));  
 
   //L3
-  NamedCommands.registerCommand("L3 FULL COMMAND", 
-  NamedCommands.getCommand("POSIÇÃO ABERTURA")
-  .andThen(NamedCommands.getCommand("L3"))
-  );
+  NamedCommands.registerCommand("L3 FULL COMMAND", new SequentialCommandGroup(
+    NamedCommands.getCommand("POSIÇÃO MINIMA ABERTURA"),
+    NamedCommands.getCommand("L3")
+  ));
 
   //L4  
-  NamedCommands.registerCommand("L4 FULL COMMAND", 
-  NamedCommands.getCommand("POSIÇÃO ABERTURA")
-  .andThen(NamedCommands.getCommand("L4"))
-  .andThen(NamedCommands.getCommand("CORAL L4"))
-  );
+  NamedCommands.registerCommand("L4 FULL COMMAND", new SequentialCommandGroup(
+    NamedCommands.getCommand("POSIÇÃO MINIMA ABERTURA"),
+    NamedCommands.getCommand("L4"),
+    NamedCommands.getCommand("CORAL L4")
+  ));
 
 
   ///////////////////////////////////////// FIM DOS COMANDOS AUTOMATICOS ///////////////////////////////////////////////

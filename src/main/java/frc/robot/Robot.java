@@ -45,10 +45,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     
-    intake.configureIntake();
-
-    elevador.configureElevator();
-
     CameraServer.startAutomaticCapture();
     swerve.resetPigeon();
   

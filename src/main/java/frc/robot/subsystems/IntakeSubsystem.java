@@ -97,16 +97,8 @@ public class IntakeSubsystem extends SubsystemBase{
         intake.setVoltage(0);
     }
 
-    public DutyCycleEncoder getIntakeEncoder(){
-        return encoder;
-    }
-
-    public PIDController getIntakePID(){
-        return controller;
-    }
-
-    public DigitalInput getCoralSwicth(){
-        return algae_swicth;
+    public boolean CoralDetected(){
+        return algae_swicth.get();
     }
 
     public boolean atSetpoint(){
@@ -153,10 +145,6 @@ public class IntakeSubsystem extends SubsystemBase{
                 break;
         }
         return position;
-    }
-
-    public void configureIntake(){
-        encoder.setDutyCycleRange(Intake.MIN_ENCODER, Intake.MAX_ENCODER);
     }
 
     @Override

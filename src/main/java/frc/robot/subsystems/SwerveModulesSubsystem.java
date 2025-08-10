@@ -52,6 +52,17 @@ public class SwerveModulesSubsystem extends SubsystemBase{
         return backRight;
     }
 
+    public double[] getPosition(){
+        double[] modules = {
+            getFrontRight().getPosition(),
+            getFrontLeft().getPosition(),
+            getBackRight().getPosition(),
+            getBackLeft().getPosition()
+        };
+
+        return modules;
+    }
+
     @Override
     public void periodic(){
         SmartDashboard.putNumber("FrontLeft", frontLeft.getPosition());

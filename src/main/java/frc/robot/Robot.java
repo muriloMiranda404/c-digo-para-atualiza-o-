@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
     shuffleboardConfig.getMode();
     shuffleboardConfig.getAlliance();
     shuffleboardConfig.getMathTime();
+    
   }
   
   @Override

@@ -159,6 +159,14 @@ public class ElevatorSubsytem extends SubsystemBase{
 
             return position;
         }
+
+        public boolean UpLimitDetected(){
+            return upSwitch.get();
+        }
+
+        public boolean DownLimitDetected(){
+            return downSwitch.get();
+        }
          
         @Override
         public void periodic(){

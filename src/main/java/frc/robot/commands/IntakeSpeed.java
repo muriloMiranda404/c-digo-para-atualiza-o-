@@ -36,7 +36,6 @@ public class IntakeSpeed extends Command{
     public void execute(){
         
         try{
-            boolean parar = false;
 
             intakeSubsystem.setSpeed(speed);
 
@@ -60,6 +59,6 @@ public class IntakeSpeed extends Command{
     
     @Override
     public void end(boolean interrupted){
-        intakeSubsystem.stopMotor();
+        intakeSubsystem.stopCoralMotor();
     }
 }

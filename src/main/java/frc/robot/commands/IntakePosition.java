@@ -21,6 +21,7 @@ public class IntakePosition extends Command{
     public void initialize(){
         
     }
+
     @Override
     public void execute(){
 
@@ -29,7 +30,6 @@ public class IntakePosition extends Command{
         intake.setPosition(setpoint);
         
     } catch(Exception e){
-        intake.stopMotor();
         System.out.println("erro detectado" + e);
     }
 
@@ -40,6 +40,6 @@ public class IntakePosition extends Command{
     }
     @Override
     public void end(boolean interrupted){
-        intake.stopMotor();
+        intake.stopIntakeMotor();
     }
 }

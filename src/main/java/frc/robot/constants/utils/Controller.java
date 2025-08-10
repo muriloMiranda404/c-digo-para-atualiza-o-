@@ -43,6 +43,7 @@ public class Controller extends CommandXboxController {
             return getRightY() * marcha;    
         }
         return choose;
+
    }
 
    public void setRumble(double strengt){

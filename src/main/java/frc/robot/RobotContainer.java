@@ -48,30 +48,33 @@ public class RobotContainer {
   private static String teleop = shuffleboardConfig.setChoosed();
   
   public RobotContainer() {
+
     if(teleop == "Normal_teleop"){
 
     swerve.setDefaultCommand(swerve.driveCommand(
       
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(1, true, true), Joystick.DEADBAND),
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(2, true, true), Joystick.DEADBAND),
-      () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true, true), Joystick.DEADBAND)));
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true, false), Joystick.DEADBAND)));
       
       System.out.println("o teleop escolhido foi o principal");
+
     configureDriveBindings();
     configureMechanismBindings();
 
-} else if(teleop == "Second_teleop"){
+ } else if(teleop == "Second_teleop"){
 
   swerve.setDefaultCommand(swerve.driveCommand(
 
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(1, true, true), Joystick.DEADBAND),
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(2, true, true), Joystick.DEADBAND),
-      () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true, true), Joystick.DEADBAND),
+      () -> MathUtil.applyDeadband(driveController.invertedAlliance(3, true, false), Joystick.DEADBAND),
       () -> MathUtil.applyDeadband(driveController.invertedAlliance(4, false, true), Joystick.DEADBAND)));
 
       System.out.println("o teleop escolhido foi o secundario");
       configureDriveBindings();
       configureMechanismBindings();
+      
     }
   }
   
@@ -115,6 +118,8 @@ public class RobotContainer {
      NamedCommands.registerCommand("POSIÇÃO ABERTURA", new IntakePosition(intakeSubsystem, Intake.ABERTURA_COMUM));
      NamedCommands.registerCommand("CORAL L4", new IntakePosition(intakeSubsystem, Intake.CORAL_L4));
      NamedCommands.registerCommand("POSIÇÃO MINIMA L1", new IntakePosition(intakeSubsystem, Intake.MIN_INTAKE));
+
+     //velocidade dos corais
      NamedCommands.registerCommand("GET CORAL", new IntakeSpeed(intakeSubsystem, true));
      NamedCommands.registerCommand("THROW CORAL", new IntakeSpeed(intakeSubsystem, 0.7));
      NamedCommands.registerCommand("INVERTED THROW CORAL", new IntakeSpeed(intakeSubsystem, -0.7));
@@ -148,6 +153,24 @@ public class RobotContainer {
       NamedCommands.getCommand("CORAL L4")
      ));
 
+     //L2 ALGAE
+     new JoystickButton(intakeController, 5).onTrue(new SequentialCommandGroup(
+      NamedCommands.getCommand("ALGAE POSITION"),
+      NamedCommands.getCommand("ALGAE L2")
+     ));
+
+     //L3 ALGAE
+     new JoystickButton(intakeController, 6).onTrue(new SequentialCommandGroup(
+      NamedCommands.getCommand("ALGAE POSITION"),
+      NamedCommands.getCommand("ALGAE L3")
+     ));
+
+     //PROCESSOR
+     new JoystickButton(intakeController, 7).onTrue(new SequentialCommandGroup(
+      NamedCommands.getCommand("ALGAE POSITION"),
+      NamedCommands.getCommand("L1")
+     ));
+
     //empurrar e puxar o coral
     new JoystickButton(intakeController, 9).whileTrue(NamedCommands.getCommand("THROW CORAL"));
     new JoystickButton(intakeController, 10).whileTrue(NamedCommands.getCommand("INVERYED THROW CORAL"));
@@ -158,7 +181,7 @@ public class RobotContainer {
       NamedCommands.getCommand("ABERTURA L1"),
       NamedCommands.getCommand("L1"),
       NamedCommands.getCommand("POSIÇÃO MINIMA L1")
-  ));
+   ));
   
   //L2
   NamedCommands.registerCommand("L2 FULL COMMAND", new SequentialCommandGroup(

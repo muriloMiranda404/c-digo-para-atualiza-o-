@@ -14,7 +14,7 @@ import frc.robot.constants.DriveConstants.Intake;
 
 public class IntakeSubsystem extends SubsystemBase{
     
-    private static SparkMax intake;
+    private static SparkMax turnIntake;
     private static SparkMax coral;
 
     private static PIDController controller;
@@ -32,7 +32,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
     private IntakeSubsystem(){
 
-       intake = new SparkMax(Intake.INTAKE_MOTOR, SparkMax.MotorType.kBrushless);
+       turnIntake = new SparkMax(Intake.INTAKE_MOTOR, SparkMax.MotorType.kBrushless);
        coral = new SparkMax(Intake.ALGAE_MOTOR, SparkMax.MotorType.kBrushless);
 
        intakeConfig = new SparkMaxConfig();
@@ -50,7 +50,7 @@ public class IntakeSubsystem extends SubsystemBase{
        .inverted(false)
        .apply(globalCofig);
 
-       intake.configure(intakeConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+       turnIntake.configure(intakeConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
        coral.configure(coralConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
         controller = Intake.INTAKE_PID;
@@ -98,12 +98,15 @@ public class IntakeSubsystem extends SubsystemBase{
             if(setpoint > Intake.MAX_INTAKE) setpoint = Intake.MAX_INTAKE;
         }
 
-       intake.set(output);
+       turnIntake.set(output);
     }
 
-    public void stopMotor(){
+    public void stopCoralMotor(){
         coral.setVoltage(0);
-        intake.setVoltage(0);
+    }
+    
+    public void stopIntakeMotor(){
+        turnIntake.setVoltage(0);
     }
 
     public boolean CoralDetected(){

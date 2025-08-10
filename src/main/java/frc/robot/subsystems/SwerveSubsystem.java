@@ -39,8 +39,6 @@ public class SwerveSubsystem extends SubsystemBase {
     ReentrantReadWriteLock odometryLock = new ReentrantReadWriteLock();
     Pose2d currentRobotPose = new Pose2d();
     public static SwerveSubsystem swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-    SwerveDrivePoseEstimator swerveDrivePoseEstimator = new SwerveDrivePoseEstimator(null, getHeading(), null, currentRobotPose);
-    SwerveDriveKinematics swerveDriveKinematics = new SwerveDriveKinematics(null);
 
     // Objeto global da SwerveDrive (Classe YAGSL)
     public SwerveDrive swerveDrive;

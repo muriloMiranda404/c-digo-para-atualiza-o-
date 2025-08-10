@@ -21,16 +21,23 @@ public class ElevatorCommand extends Command{
     public void initialize(){
 
     }
+
     @Override
     public void execute(){
+        try{
         elevatorSubsytem.setSetpoint(setpoint);
+    } catch(Exception e){
+        System.out.println("erro ao colocar velocidade: " + e.getMessage());
     }
+    }
+
+    @Override
+    public boolean isFinished(){
+        return elevatorSubsytem.atSetpoint() || elevatorSubsytem.UpLimitDetected() || elevatorSubsytem.DownLimitDetected();
+    }
+
     @Override
     public void end(boolean interrupted){
         elevatorSubsytem.stopMotor();
-    }
-    @Override
-    public boolean isFinished(){
-        return elevatorSubsytem.atSetpoint();
     }
 }

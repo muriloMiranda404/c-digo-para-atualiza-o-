@@ -115,6 +115,7 @@ public class AlingToTarget extends Command {
             // Detecta perda de alvo
             if (hasTarget != ultimoEstadoTarget) {
                 ultimoEstadoTarget = hasTarget;
+                
                 if (!hasTarget) {
                     tentativas++;
                     System.out.println("Tag perdida! Tentativa " + tentativas + " de " + MAX_TENTATIVAS);

@@ -3,12 +3,22 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.DriveConstants.IDs;
 
 public class LimelightConfig extends SubsystemBase{
     
     private final NetworkTable Limelight;
+
+    public static LimelightConfig limelightConfig = new LimelightConfig(IDs.LIMELIGHT);
+
+    public static LimelightConfig getInstance(){
+        if(limelightConfig == null){
+            return new LimelightConfig(IDs.LIMELIGHT);
+        }
+        return limelightConfig;
+    }
     
-    public LimelightConfig(String table){
+    private LimelightConfig(String table){
         Limelight = NetworkTableInstance.getDefault().getTable(table);
     }
 

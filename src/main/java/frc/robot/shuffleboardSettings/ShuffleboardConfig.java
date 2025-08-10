@@ -17,7 +17,9 @@ public class ShuffleboardConfig{
     private static SendableChooser<Double> startPositionChooser;
     private static Pigeon2 pigeon;
 
-    public ShuffleboardConfig(){
+    public static ShuffleboardConfig shuffleboardConfig = new ShuffleboardConfig();
+
+    private ShuffleboardConfig(){
 
         teleopChooser = new SendableChooser<>();
         startPositionChooser = new SendableChooser<>();
@@ -37,6 +39,13 @@ public class ShuffleboardConfig{
         shuffleboard.add(CameraServer.startAutomaticCapture());
 
         DataLogManager.start();
+    }
+
+    public static ShuffleboardConfig getInstance(){
+        if(shuffleboardConfig == null){
+            return new ShuffleboardConfig();
+        }
+        return shuffleboardConfig;
     }
 
     public String setChoosed(){

@@ -18,12 +18,10 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightConfig;
 import frc.robot.subsystems.SwerveModulesSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
-import java.io.File;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -33,17 +31,17 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 public class RobotContainer {
 
-  private static final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-  private static final LimelightConfig limelight = new LimelightConfig(IDs.LIMELIGHT);
-
+  private static final LimelightConfig limelight = LimelightConfig.getInstance();
+  
   private static final Controller driveController = new Controller(Joystick.DRIVE_CONTROLLER);
   private static final XboxController intakeController = new XboxController(Joystick.INTAKE_CONTROL_ID);
   
-  private static final ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
-  private static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private static final SwerveModulesSubsystem swerveModules = new SwerveModulesSubsystem();
+  private static final SwerveSubsystem swerve = SwerveSubsystem.getInstance();
+  private static final ElevatorSubsytem elevatorSubsytem = ElevatorSubsytem.getInstance();
+  private static final IntakeSubsystem intakeSubsystem = IntakeSubsystem.getInstance();
+  private static final SwerveModulesSubsystem swerveModules = SwerveModulesSubsystem.getInstance();
 
-  private static final ShuffleboardConfig shuffleboardConfig = new ShuffleboardConfig();
+  private static final ShuffleboardConfig shuffleboardConfig = ShuffleboardConfig.getInstance();
   
   private static final Pigeon2 pigeon = new Pigeon2(IDs.PIGEON2);
 
@@ -189,59 +187,17 @@ public class RobotContainer {
     return new PathPlannerAuto(Autonomous.AUTO);
   }
 
-  public static ElevatorSubsytem getElevatorInstance(){
-    if(elevatorSubsytem == null){
-        return new ElevatorSubsytem();
+  public static XboxController getContainerIntakeController(){
+    if(intakeController == null){
+      return new CommandXboxController(Joystick.INTAKE_CONTROL_ID).getHID();
     }
-    return elevatorSubsytem;
-}
-
-public static IntakeSubsystem getIntakeInstance(){
-  if(intakeSubsystem == null){
-    return new IntakeSubsystem();
+    return intakeController;
   }
-  return intakeSubsystem;
-}
 
-public static SwerveModulesSubsystem getModulesInstance(){
-  if(swerveModules == null){
-    return new SwerveModulesSubsystem();
+  public static XboxController getContainerDriverController(){
+    if(driveController == null){
+      return new CommandXboxController(Joystick.DRIVE_CONTROLLER).getHID();
+    }
+    return driveController.getHID();
   }
-  return swerveModules;
-}
-
-public static SwerveSubsystem getSwerveInstance(){
-  if(swerve == null){
-    return new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-  }
-  return swerve;
-}
-
-public static LimelightConfig getLimelightInstance(){
-  if(limelight == null){
-    return new LimelightConfig(IDs.LIMELIGHT);
-  }
-  return limelight;
-}
-
-public static XboxController getContainerIntakeController(){
-  if(intakeController == null){
-    return new CommandXboxController(Joystick.INTAKE_CONTROL_ID).getHID();
-  }
-  return intakeController;
-}
-
-public static XboxController getContainerDriverController(){
-  if(driveController == null){
-    return new CommandXboxController(Joystick.DRIVE_CONTROLLER).getHID();
-  }
-  return driveController.getHID();
-}
-
-public static ShuffleboardConfig getShuffleboardInstance(){
-  if(shuffleboardConfig == null){
-    return new ShuffleboardConfig();
-  }
-  return shuffleboardConfig;
-}
 }

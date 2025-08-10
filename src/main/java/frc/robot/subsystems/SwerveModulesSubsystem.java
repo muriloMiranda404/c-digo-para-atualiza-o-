@@ -15,7 +15,9 @@ public class SwerveModulesSubsystem extends SubsystemBase{
 
     private final SwerveDriveKinematics kinematics;
 
-    public SwerveModulesSubsystem(){
+    public static SwerveModulesSubsystem swerveModulesSubsystem = new SwerveModulesSubsystem();
+
+    private SwerveModulesSubsystem(){
 
         frontLeft = new SwerveModules(3, 4, 10, 249.78);
         frontRight = new SwerveModules(6, 5, 11, 181.31);
@@ -28,6 +30,13 @@ public class SwerveModulesSubsystem extends SubsystemBase{
         new Translation2d(-0.5, 0.5),//BL
         new Translation2d(-0.5, -0.5)//BR
         );
+    }
+
+    public static SwerveModulesSubsystem getInstance(){
+        if(swerveModulesSubsystem == null){
+            return new SwerveModulesSubsystem();
+        }
+        return swerveModulesSubsystem;
     }
 
     public SwerveModules getFrontRight(){

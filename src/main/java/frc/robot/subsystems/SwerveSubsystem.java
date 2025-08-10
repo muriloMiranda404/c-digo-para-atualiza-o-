@@ -19,6 +19,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DriveConstants.IDs;
@@ -34,6 +35,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     ReentrantReadWriteLock odometryLock = new ReentrantReadWriteLock();
     Pose2d currentRobotPose = new Pose2d();
+    public static SwerveSubsystem swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
 
     // Objeto global da SwerveDrive (Classe YAGSL)
     public SwerveDrive swerveDrive;
@@ -43,7 +45,7 @@ public class SwerveSubsystem extends SubsystemBase {
     // Método construtor da classe
     SwerveModulePosition[] module;
 
-    public SwerveSubsystem(File directory) {
+    private SwerveSubsystem(File directory) {
         // Seta a telemetria como nível mais alto
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
             try {
@@ -54,6 +56,13 @@ public class SwerveSubsystem extends SubsystemBase {
         swerveDrive.setChassisDiscretization(true, 0.2);
         
         setupPathPlanner();
+    }
+
+    public static SwerveSubsystem getInstance(){
+      if(swerveSubsystem == null){
+        return new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
+      }
+      return swerveSubsystem;
     }
     
     @Override

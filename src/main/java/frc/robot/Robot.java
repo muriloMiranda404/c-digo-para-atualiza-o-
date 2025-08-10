@@ -33,13 +33,13 @@ public class Robot extends TimedRobot {
 
     robotContainer = new RobotContainer();
 
-    swerve = RobotContainer.getSwerveInstance();
+    swerve = SwerveSubsystem.getInstance();
     
-    elevador = RobotContainer.getElevatorInstance();
+    elevador = ElevatorSubsytem.getInstance();
     
-    intake = RobotContainer.getIntakeInstance();
-    
-    shuffleboardConfig = RobotContainer.getShuffleboardInstance();
+    intake = IntakeSubsystem.getInstance();
+
+    shuffleboardConfig = ShuffleboardConfig.getInstance();
   }
 
   @Override

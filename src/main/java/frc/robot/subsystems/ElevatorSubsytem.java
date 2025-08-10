@@ -14,49 +14,57 @@ import frc.robot.constants.DriveConstants.Elevator;
 
 public class ElevatorSubsytem extends SubsystemBase{
 
-    public static SparkMaxConfig rightMotorConfig;
-    public static SparkMaxConfig leftMotorConfig;
+    private static SparkMaxConfig rightMotorConfig;
+    private static SparkMaxConfig leftMotorConfig;
     
-    public static SparkMax rightMotor;
-    public static SparkMax leftMotor;
+    private static SparkMax rightMotor;
+    private static SparkMax leftMotor;
     
-    public static PIDController controller;
+    private static PIDController controller;
     
-    public static DigitalInput upSwitch;
-    public static DigitalInput downSwitch;
+    private static DigitalInput upSwitch;
+    private static DigitalInput downSwitch;
 
-    public static Encoder encoder;
+    private static Encoder encoder;
 
-    public double setpoint;
+    private double setpoint;
+
+    public static ElevatorSubsytem elevatorSubsytem = new ElevatorSubsytem();
+
+    private ElevatorSubsytem(){
         
-    public ElevatorSubsytem(){
-            
         rightMotorConfig = new SparkMaxConfig();
         leftMotorConfig = new SparkMaxConfig();
-
+        
         rightMotorConfig
         .inverted(false)
         .idleMode(IdleMode.kCoast);
-
+        
         leftMotorConfig
         .inverted(true)
         .idleMode(IdleMode.kCoast);
-
+        
         leftMotor = new SparkMax(Elevator.LEFT_MOTOR, SparkMax.MotorType.kBrushless);
         rightMotor = new SparkMax(Elevator.RIGHT_MOTOR, SparkMax.MotorType.kBrushless);
-
+        
         leftMotor.configure(leftMotorConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
         rightMotor.configure(rightMotorConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-            
+        
         controller = Elevator.ELEVATOR_PID;
         controller.setTolerance(Elevator.TOLERANCE_ELEVATOR);
-
+        
         upSwitch = new DigitalInput(Elevator.UP_SWITCH);
         downSwitch = new DigitalInput(Elevator.DOWN_SWITCH);
         
         encoder = new Encoder(Elevator.ENCODER_A, Elevator.ENCODER_B);
-        }
-        
+    }
+    
+    public static ElevatorSubsytem getInstance(){
+        if(elevatorSubsytem == null){
+            return new ElevatorSubsytem();
+        } 
+        return elevatorSubsytem;
+    }
         public void setSpeed(double speed){
             leftMotor.set(speed);
             rightMotor.set(speed);

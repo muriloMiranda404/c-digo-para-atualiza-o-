@@ -14,21 +14,23 @@ import frc.robot.constants.DriveConstants.Intake;
 
 public class IntakeSubsystem extends SubsystemBase{
     
-    public SparkMax intake;
-    public SparkMax coral;
+    private static SparkMax intake;
+    private static SparkMax coral;
 
-    public PIDController controller;
+    private static PIDController controller;
 
-    public DutyCycleEncoder encoder;
-    public DigitalInput algae_swicth;
+    private static DutyCycleEncoder encoder;
+    private static DigitalInput algae_swicth;
 
-    public SparkMaxConfig intakeConfig;
-    public SparkMaxConfig coralConfig;
-    public SparkMaxConfig globalCofig;
+    private static SparkMaxConfig intakeConfig;
+    private static SparkMaxConfig coralConfig;
+    private static SparkMaxConfig globalCofig;
 
-    public double setpoint;
+    private static double setpoint;
 
-    public IntakeSubsystem(){
+    public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
+    private IntakeSubsystem(){
 
        intake = new SparkMax(Intake.INTAKE_MOTOR, SparkMax.MotorType.kBrushless);
        coral = new SparkMax(Intake.ALGAE_MOTOR, SparkMax.MotorType.kBrushless);
@@ -57,6 +59,13 @@ public class IntakeSubsystem extends SubsystemBase{
 
         algae_swicth = new DigitalInput(Intake.ALGAE_SWICTH);
 
+    }
+
+    public static IntakeSubsystem getInstance(){
+        if(intakeSubsystem == null){
+            return new IntakeSubsystem();
+        }
+        return intakeSubsystem;
     }
 
     public void setSpeed(double speed){
